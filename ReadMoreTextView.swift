@@ -120,10 +120,10 @@ class ReadMoreTextView: UITextView {
     func resetText() {
         textContainer.maximumNumberOfLines = 0
         if originalText != nil {
-            text = originalText
+            textStorage.replaceCharactersInRange(NSMakeRange(0, countElements(text!)), withString: originalText)
         }
         else if originalAttributedText != nil {
-            attributedText = originalAttributedText
+            textStorage.replaceCharactersInRange(NSMakeRange(0, countElements(text!)), withAttributedString: originalAttributedText)
         }
         invalidateIntrinsicContentSize()
     }

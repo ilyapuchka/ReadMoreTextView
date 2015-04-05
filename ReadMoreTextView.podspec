@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 			* Set trim text as an NSString or NSAttributedString
 			* Set maximum number of lines to display
 			* Turn trim on/off
-			* Live updates in Interface Builder 
+			* Live updates and setup in Interface Builder 
                    DESC
 
   s.homepage     = "http://ilya.puchka.me/custom-uitextview-in-swift/"

@@ -11,23 +11,6 @@ import UIKit
 @IBDesignable
 class ReadMoreTextView: UITextView {
     
-    @IBInspectable
-    var maximumNumberOfLines: Int = 0 {
-        didSet { setNeedsLayout() }
-    }
-    
-    @IBInspectable
-    var trimText: NSString? {
-        didSet { setNeedsLayout() }
-    }
-    
-    @IBInspectable
-    var shouldTrim: Bool = false {
-        didSet { setNeedsLayout() }
-    }
-    
-    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsetsZero
-    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         scrollEnabled = false
@@ -48,12 +31,42 @@ class ReadMoreTextView: UITextView {
         editable = false
     }
     
-    convenience init(maximumNumberOfLines: Int, trimText: String?, shouldTrim: Bool) {
+    convenience init(maximumNumberOfLines: Int, trimText: NSString?, shouldTrim: Bool) {
         self.init()
         self.maximumNumberOfLines = maximumNumberOfLines
         self.trimText = trimText
         self.shouldTrim = shouldTrim
     }
+    
+    convenience init(maximumNumberOfLines: Int, attributedTrimText: NSAttributedString?, shouldTrim: Bool) {
+        self.init()
+        self.maximumNumberOfLines = maximumNumberOfLines
+        self.attributedTrimText = attributedTrimText
+        self.shouldTrim = shouldTrim
+    }
+    
+    @IBInspectable
+    var maximumNumberOfLines: Int = 0 {
+        didSet { setNeedsLayout() }
+    }
+    
+    @IBInspectable
+    var trimText: NSString? {
+        didSet { setNeedsLayout() }
+    }
+    
+    var attributedTrimText: NSAttributedString? {
+        didSet { setNeedsLayout() }
+    }
+    
+    @IBInspectable
+    var shouldTrim: Bool = false {
+        didSet { setNeedsLayout() }
+    }
+    
+    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsetsZero
+    var appendTrimTextPrefix: Bool = true
+    var trimTextPrefix: String = "..."
     
     private var originalText: String!
     
@@ -81,7 +94,7 @@ class ReadMoreTextView: UITextView {
     }
     
     func needsTrim() -> Bool {
-        return shouldTrim && trimText != nil
+        return shouldTrim && _trimText != nil
     }
     
     func updateText() {
@@ -90,7 +103,16 @@ class ReadMoreTextView: UITextView {
         
         var range = rangeToReplaceWithTrimText()
         if range.location != NSNotFound {
-            textStorage.replaceCharactersInRange(range, withString: "... ".stringByAppendingString(trimText!))
+            let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
+            
+            if let text = trimText?.mutableCopy() as? NSMutableString {
+                text.insertString("\(prefix) ", atIndex: 0)
+                textStorage.replaceCharactersInRange(range, withString: text)
+            }
+            else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
+                text.insertAttributedString(NSAttributedString(string: "\(prefix) "), atIndex: 0)
+                textStorage.replaceCharactersInRange(range, withAttributedString: text)
+            }
         }
         invalidateIntrinsicContentSize()
     }
@@ -126,15 +148,33 @@ class ReadMoreTextView: UITextView {
     
     //MARK: Private methods
     
+    private var _trimText: NSString? {
+        get {
+            return trimText ?? attributedTrimText?.string
+        }
+    }
+    
+    private var _trimTextPrefixLength: Int {
+        get {
+            return appendTrimTextPrefix ? countElements(trimTextPrefix) + 1 : 1
+        }
+    }
+    
+    private var _originalTextLength: Int {
+        get {
+            return originalText != nil ? countElements(originalText!) : originalAttributedText!.length
+        }
+    }
+    
     private func rangeToReplaceWithTrimText() -> NSRange {
         let emptyRange = NSMakeRange(NSNotFound, 0)
         
         var rangeToReplace = layoutManager.characterRangeThatFits(textContainer)
-        if NSMaxRange(rangeToReplace) == originalTextLength() {
+        if NSMaxRange(rangeToReplace) == _originalTextLength {
             rangeToReplace = emptyRange
         }
         else {
-            rangeToReplace.location = NSMaxRange(rangeToReplace) - trimText!.length - 4
+            rangeToReplace.location = NSMaxRange(rangeToReplace) - _trimText!.length - _trimTextPrefixLength
             if rangeToReplace.location < 0 {
                 rangeToReplace = emptyRange
             }
@@ -145,14 +185,10 @@ class ReadMoreTextView: UITextView {
         return rangeToReplace
     }
     
-    private func originalTextLength() -> Int {
-        return originalText != nil ? countElements(originalText!) : originalAttributedText!.length
-    }
-    
     private func trimTextRange() -> NSRange {
         var trimTextRange = rangeToReplaceWithTrimText()
         if trimTextRange.location != NSNotFound {
-            trimTextRange.length = 4 + trimText!.length
+            trimTextRange.length = _trimTextPrefixLength + _trimText!.length
         }
         return trimTextRange
     }
@@ -164,7 +200,6 @@ class ReadMoreTextView: UITextView {
         boundingRect = CGRectInset(boundingRect, -(trimTextRangePadding.left + trimTextRangePadding.right), -(trimTextRangePadding.top + trimTextRangePadding.bottom))
         return CGRectContainsPoint(boundingRect, point)
     }
-    
 }
 
 //MARK: NSLayoutManager extension

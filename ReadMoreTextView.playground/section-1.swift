@@ -12,23 +12,6 @@ import XCPlayground
 @IBDesignable
 class ReadMoreTextView: UITextView {
     
-    @IBInspectable
-    var maximumNumberOfLines: Int = 0 {
-        didSet { setNeedsLayout() }
-    }
-    
-    @IBInspectable
-    var trimText: NSString? {
-        didSet { setNeedsLayout() }
-    }
-    
-    @IBInspectable
-    var shouldTrim: Bool = false {
-        didSet { setNeedsLayout() }
-    }
-    
-    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsetsZero
-    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         scrollEnabled = false
@@ -49,12 +32,42 @@ class ReadMoreTextView: UITextView {
         editable = false
     }
     
-    convenience init(maximumNumberOfLines: Int, trimText: String?, shouldTrim: Bool) {
+    convenience init(maximumNumberOfLines: Int, trimText: NSString?, shouldTrim: Bool) {
         self.init()
         self.maximumNumberOfLines = maximumNumberOfLines
         self.trimText = trimText
         self.shouldTrim = shouldTrim
     }
+    
+    convenience init(maximumNumberOfLines: Int, attributedTrimText: NSAttributedString?, shouldTrim: Bool) {
+        self.init()
+        self.maximumNumberOfLines = maximumNumberOfLines
+        self.attributedTrimText = attributedTrimText
+        self.shouldTrim = shouldTrim
+    }
+    
+    @IBInspectable
+    var maximumNumberOfLines: Int = 0 {
+        didSet { setNeedsLayout() }
+    }
+    
+    @IBInspectable
+    var trimText: NSString? {
+        didSet { setNeedsLayout() }
+    }
+    
+    var attributedTrimText: NSAttributedString? {
+        didSet { setNeedsLayout() }
+    }
+    
+    @IBInspectable
+    var shouldTrim: Bool = false {
+        didSet { setNeedsLayout() }
+    }
+    
+    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsetsZero
+    var appendTrimTextPrefix: Bool = true
+    var trimTextPrefix: String = "..."
     
     private var originalText: String!
     
@@ -82,7 +95,7 @@ class ReadMoreTextView: UITextView {
     }
     
     func needsTrim() -> Bool {
-        return shouldTrim && trimText != nil
+        return shouldTrim && _trimText != nil
     }
     
     func updateText() {
@@ -91,7 +104,16 @@ class ReadMoreTextView: UITextView {
         
         var range = rangeToReplaceWithTrimText()
         if range.location != NSNotFound {
-            textStorage.replaceCharactersInRange(range, withString: "... ".stringByAppendingString(trimText!))
+            let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
+            
+            if let text = trimText?.mutableCopy() as? NSMutableString {
+                text.insertString("\(prefix) ", atIndex: 0)
+                textStorage.replaceCharactersInRange(range, withString: text)
+            }
+            else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
+                text.insertAttributedString(NSAttributedString(string: "\(prefix) "), atIndex: 0)
+                textStorage.replaceCharactersInRange(range, withAttributedString: text)
+            }
         }
         invalidateIntrinsicContentSize()
     }
@@ -127,15 +149,33 @@ class ReadMoreTextView: UITextView {
     
     //MARK: Private methods
     
+    private var _trimText: NSString? {
+        get {
+            return trimText ?? attributedTrimText?.string
+        }
+    }
+    
+    private var _trimTextPrefixLength: Int {
+        get {
+            return appendTrimTextPrefix ? countElements(trimTextPrefix) + 1 : 1
+        }
+    }
+    
+    private var _originalTextLength: Int {
+        get {
+            return originalText != nil ? countElements(originalText!) : originalAttributedText!.length
+        }
+    }
+    
     private func rangeToReplaceWithTrimText() -> NSRange {
         let emptyRange = NSMakeRange(NSNotFound, 0)
         
         var rangeToReplace = layoutManager.characterRangeThatFits(textContainer)
-        if NSMaxRange(rangeToReplace) == originalTextLength() {
+        if NSMaxRange(rangeToReplace) == _originalTextLength {
             rangeToReplace = emptyRange
         }
         else {
-            rangeToReplace.location = NSMaxRange(rangeToReplace) - trimText!.length - 4
+            rangeToReplace.location = NSMaxRange(rangeToReplace) - _trimText!.length - _trimTextPrefixLength
             if rangeToReplace.location < 0 {
                 rangeToReplace = emptyRange
             }
@@ -146,14 +186,10 @@ class ReadMoreTextView: UITextView {
         return rangeToReplace
     }
     
-    private func originalTextLength() -> Int {
-        return originalText != nil ? countElements(originalText!) : originalAttributedText!.length
-    }
-    
     private func trimTextRange() -> NSRange {
         var trimTextRange = rangeToReplaceWithTrimText()
         if trimTextRange.location != NSNotFound {
-            trimTextRange.length = 4 + trimText!.length
+            trimTextRange.length = _trimTextPrefixLength + _trimText!.length
         }
         return trimTextRange
     }
@@ -165,7 +201,6 @@ class ReadMoreTextView: UITextView {
         boundingRect = CGRectInset(boundingRect, -(trimTextRangePadding.left + trimTextRangePadding.right), -(trimTextRangePadding.top + trimTextRangePadding.bottom))
         return CGRectContainsPoint(boundingRect, point)
     }
-
 }
 
 //MARK: NSLayoutManager extension
@@ -211,7 +246,8 @@ func createView(textView: UITextView) -> UIView {
     return view
 }
 
-let textView = ReadMoreTextView(maximumNumberOfLines: 3, trimText: "Read more", shouldTrim: true)
+let trimText = NSAttributedString(string: "Read more", attributes: [NSForegroundColorAttributeName: UIColor.blueColor()])
+let textView = ReadMoreTextView(maximumNumberOfLines: 3, attributedTrimText: trimText, shouldTrim: true)
 
 textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
 

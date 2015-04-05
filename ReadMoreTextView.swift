@@ -162,7 +162,13 @@ class ReadMoreTextView: UITextView {
     
     private var _originalTextLength: Int {
         get {
-            return originalText != nil ? countElements(originalText!) : originalAttributedText!.length
+            if originalText != nil {
+                return countElements(originalText!)
+            }
+            else  if originalAttributedText != nil {
+                return originalAttributedText!.length
+            }
+            return 0
         }
     }
     

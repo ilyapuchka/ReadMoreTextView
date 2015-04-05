@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ReadMoreTextView.swift">
+      location = "container:ReadMoreTextView.playground">
    </FileRef>
    <FileRef
-      location = "container:ReadMoreTextView.playground">
+      location = "group:Example/ReadMoreTextView.xcodeproj">
    </FileRef>
 </Workspace>

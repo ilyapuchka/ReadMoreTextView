@@ -1,4 +1,24 @@
 # ReadMoreTextView
+
 UITextView subclass with "Read more" behavior.
 
-Source code for my article - ["Custom UITextView in Swift"](http://ilya.puchka.me/custom-uitextview-in-swift/).
+##Usage
+
+	let textView = ReadMoreTextView()
+
+	textView.text = "Lorem ipsum dolor ..."
+
+	textView.shouldTrim = true
+	textView.maximumNumberOfLines = 3
+	textView.trimText = "Read more"
+
+
+##Installation
+
+Available in [Cocoa Pods](https://github.com/CocoaPods/CocoaPods):
+
+	pod 'ReadMoreTextView'
+
+##License
+
+ReadMoreTextView is available under the [MIT license](http://www.opensource.org/licenses/mit-license.php).

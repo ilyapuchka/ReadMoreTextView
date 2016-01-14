@@ -1,3 +1,5 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 # ReadMoreTextView
 
 UITextView subclass with "Read more" behavior.

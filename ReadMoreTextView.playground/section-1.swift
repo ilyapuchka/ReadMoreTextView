@@ -18,15 +18,15 @@ class ReadMoreTextView: UITextView {
         editable = false
     }
     
-    override convenience init(frame: CGRect) {
+    convenience init(frame: CGRect) {
         self.init(frame: frame, textContainer: nil)
     }
     
-    override convenience init() {
+    convenience init() {
         self.init(frame: CGRectZero, textContainer: nil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         scrollEnabled = false
         editable = false
@@ -41,7 +41,7 @@ class ReadMoreTextView: UITextView {
     
     convenience init(maximumNumberOfLines: Int, attributedTrimText: NSAttributedString?, shouldTrim: Bool) {
         self.init()
-        self.maximumNumberOfLines = maximumNumberOfLines
+        self.maximumNumberOfLines =  maximumNumberOfLines
         self.attributedTrimText = attributedTrimText
         self.shouldTrim = shouldTrim
     }
@@ -108,7 +108,7 @@ class ReadMoreTextView: UITextView {
             
             if let text = trimText?.mutableCopy() as? NSMutableString {
                 text.insertString("\(prefix) ", atIndex: 0)
-                textStorage.replaceCharactersInRange(range, withString: text)
+                textStorage.replaceCharactersInRange(range, withString: text as String)
             }
             else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
                 text.insertAttributedString(NSAttributedString(string: "\(prefix) "), atIndex: 0)
@@ -207,6 +207,10 @@ class ReadMoreTextView: UITextView {
         boundingRect = CGRectInset(boundingRect, -(trimTextRangePadding.left + trimTextRangePadding.right), -(trimTextRangePadding.top + trimTextRangePadding.bottom))
         return CGRectContainsPoint(boundingRect, point)
     }
+    
+    func countElements(text: String) -> Int {
+        return text.characters.count
+    }
 }
 
 //MARK: NSLayoutManager extension
@@ -233,19 +237,19 @@ func createView(textView: UITextView) -> UIView {
     let view = UIView(frame: UIScreen.mainScreen().bounds)
     view.backgroundColor = UIColor.greenColor()
 
-    textView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    textView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(textView)
     let metrics = ["padding": 20]
     
     view.addConstraints(NSLayoutConstraint
         .constraintsWithVisualFormat("V:|-padding-[textView]-(>=padding)-|",
-            options: nil,
+            options: NSLayoutFormatOptions.AlignAllCenterX,
             metrics: metrics,
             views: ["textView": textView]))
     
     view.addConstraints(NSLayoutConstraint
         .constraintsWithVisualFormat("H:|-padding-[textView]-padding-|",
-            options: nil,
+            options: NSLayoutFormatOptions.AlignAllCenterX,
             metrics: metrics,
             views: ["textView": textView]))
     
@@ -257,7 +261,7 @@ let textView = ReadMoreTextView(maximumNumberOfLines: 3, attributedTrimText: tri
 
 textView.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
 
-XCPShowView("view", createView(textView))
+XCPlaygroundPage.currentPage.liveView = createView(textView)
 
 
 

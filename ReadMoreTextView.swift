@@ -101,7 +101,7 @@ class ReadMoreTextView: UITextView {
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.size = CGSizeMake(bounds.size.width, CGFloat.max)
         
-        var range = rangeToReplaceWithTrimText()
+        let range = rangeToReplaceWithTrimText()
         if range.location != NSNotFound {
             let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
             

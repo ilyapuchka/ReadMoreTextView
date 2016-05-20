@@ -1,6 +1,6 @@
 //
 //  TextView.swift
-//  
+//
 //
 //  Created by Ilya Puchka on 04.04.15.
 //
@@ -17,15 +17,15 @@ class ReadMoreTextView: UITextView {
         editable = false
     }
     
-    override convenience init(frame: CGRect) {
+    convenience init(frame: CGRect) {
         self.init(frame: frame, textContainer: nil)
     }
     
-    override convenience init() {
+    convenience init() {
         self.init(frame: CGRectZero, textContainer: nil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         scrollEnabled = false
         editable = false
@@ -101,13 +101,13 @@ class ReadMoreTextView: UITextView {
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.size = CGSizeMake(bounds.size.width, CGFloat.max)
         
-        var range = rangeToReplaceWithTrimText()
+        let range = rangeToReplaceWithTrimText()
         if range.location != NSNotFound {
             let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
             
             if let text = trimText?.mutableCopy() as? NSMutableString {
                 text.insertString("\(prefix) ", atIndex: 0)
-                textStorage.replaceCharactersInRange(range, withString: text)
+                textStorage.replaceCharactersInRange(range, withString: text as String)
             }
             else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
                 text.insertAttributedString(NSAttributedString(string: "\(prefix) "), atIndex: 0)
@@ -205,6 +205,10 @@ class ReadMoreTextView: UITextView {
         boundingRect = CGRectOffset(boundingRect, textContainerInset.left, textContainerInset.top)
         boundingRect = CGRectInset(boundingRect, -(trimTextRangePadding.left + trimTextRangePadding.right), -(trimTextRangePadding.top + trimTextRangePadding.bottom))
         return CGRectContainsPoint(boundingRect, point)
+    }
+    
+    func countElements(text: String) -> Int {
+        return text.characters.count
     }
 }
 

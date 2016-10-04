@@ -13,8 +13,8 @@ class ReadMoreTextView: UITextView {
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        scrollEnabled = false
-        editable = false
+        isScrollEnabled = false
+        isEditable = false
     }
     
     convenience init(frame: CGRect) {
@@ -22,13 +22,13 @@ class ReadMoreTextView: UITextView {
     }
     
     convenience init() {
-        self.init(frame: CGRectZero, textContainer: nil)
+        self.init(frame: CGRect.zero, textContainer: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        scrollEnabled = false
-        editable = false
+        isScrollEnabled = false
+        isEditable = false
     }
     
     convenience init(maximumNumberOfLines: Int, trimText: NSString?, shouldTrim: Bool) {
@@ -64,11 +64,11 @@ class ReadMoreTextView: UITextView {
         didSet { setNeedsLayout() }
     }
     
-    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsetsZero
+    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsets.zero
     var appendTrimTextPrefix: Bool = true
     var trimTextPrefix: String = "..."
     
-    private var originalText: String!
+    fileprivate var originalText: String!
     
     override var text: String! {
         didSet {
@@ -78,7 +78,7 @@ class ReadMoreTextView: UITextView {
         }
     }
     
-    private var originalAttributedText: NSAttributedString!
+    fileprivate var originalAttributedText: NSAttributedString!
     
     override var attributedText: NSAttributedString! {
         didSet {
@@ -99,19 +99,19 @@ class ReadMoreTextView: UITextView {
     
     func updateText() {
         textContainer.maximumNumberOfLines = maximumNumberOfLines
-        textContainer.size = CGSizeMake(bounds.size.width, CGFloat.max)
+        textContainer.size = CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude)
         
         let range = rangeToReplaceWithTrimText()
         if range.location != NSNotFound {
             let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
             
             if let text = trimText?.mutableCopy() as? NSMutableString {
-                text.insertString("\(prefix) ", atIndex: 0)
-                textStorage.replaceCharactersInRange(range, withString: text as String)
+                text.insert("\(prefix) ", at: 0)
+                textStorage.replaceCharacters(in: range, with: text as String)
             }
             else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
-                text.insertAttributedString(NSAttributedString(string: "\(prefix) "), atIndex: 0)
-                textStorage.replaceCharactersInRange(range, withAttributedString: text)
+                text.insert(NSAttributedString(string: "\(prefix) "), at: 0)
+                textStorage.replaceCharacters(in: range, with: text)
             }
         }
         invalidateIntrinsicContentSize()
@@ -120,47 +120,47 @@ class ReadMoreTextView: UITextView {
     func resetText() {
         textContainer.maximumNumberOfLines = 0
         if originalText != nil {
-            textStorage.replaceCharactersInRange(NSMakeRange(0, countElements(text!)), withString: originalText)
+            textStorage.replaceCharacters(in: NSMakeRange(0, countElements(text!)), with: originalText)
         }
         else if originalAttributedText != nil {
-            textStorage.replaceCharactersInRange(NSMakeRange(0, countElements(text!)), withAttributedString: originalAttributedText)
+            textStorage.replaceCharacters(in: NSMakeRange(0, countElements(text!)), with: originalAttributedText)
         }
         invalidateIntrinsicContentSize()
     }
     
-    override func intrinsicContentSize() -> CGSize {
-        textContainer.size = CGSizeMake(bounds.size.width, CGFloat.max)
-        var intrinsicContentSize = layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForTextContainer(textContainer), inTextContainer: textContainer).size
+    override var intrinsicContentSize : CGSize {
+        textContainer.size = CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude)
+        var intrinsicContentSize = layoutManager.boundingRect(forGlyphRange: layoutManager.glyphRange(for: textContainer), in: textContainer).size
         intrinsicContentSize.width = UIViewNoIntrinsicMetric
         intrinsicContentSize.height += (textContainerInset.top + textContainerInset.bottom)
         return intrinsicContentSize
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
         if needsTrim() && pointInTrimTextRange(point) {
             shouldTrim = false
             maximumNumberOfLines = 0
         }
         
-        return super.hitTest(point, withEvent: event)
+        return super.hitTest(point, with: event)
     }
     
     //MARK: Private methods
     
-    private var _trimText: NSString? {
+    fileprivate var _trimText: NSString? {
         get {
-            return trimText ?? attributedTrimText?.string
+            return trimText ?? attributedTrimText?.string as NSString?
         }
     }
     
-    private var _trimTextPrefixLength: Int {
+    fileprivate var _trimTextPrefixLength: Int {
         get {
             return appendTrimTextPrefix ? countElements(trimTextPrefix) + 1 : 1
         }
     }
     
-    private var _originalTextLength: Int {
+    fileprivate var _originalTextLength: Int {
         get {
             if originalText != nil {
                 return countElements(originalText!)
@@ -172,7 +172,7 @@ class ReadMoreTextView: UITextView {
         }
     }
     
-    private func rangeToReplaceWithTrimText() -> NSRange {
+    fileprivate func rangeToReplaceWithTrimText() -> NSRange {
         let emptyRange = NSMakeRange(NSNotFound, 0)
         
         var rangeToReplace = layoutManager.characterRangeThatFits(textContainer)
@@ -191,7 +191,7 @@ class ReadMoreTextView: UITextView {
         return rangeToReplace
     }
     
-    private func trimTextRange() -> NSRange {
+    fileprivate func trimTextRange() -> NSRange {
         var trimTextRange = rangeToReplaceWithTrimText()
         if trimTextRange.location != NSNotFound {
             trimTextRange.length = _trimTextPrefixLength + _trimText!.length
@@ -199,15 +199,15 @@ class ReadMoreTextView: UITextView {
         return trimTextRange
     }
     
-    private func pointInTrimTextRange(point: CGPoint) -> Bool {
-        let offset = CGPointMake(textContainerInset.left, textContainerInset.top)
+    fileprivate func pointInTrimTextRange(_ point: CGPoint) -> Bool {
+        let offset = CGPoint(x: textContainerInset.left, y: textContainerInset.top)
         var boundingRect = layoutManager.boundingRectForCharacterRange(trimTextRange(), inTextContainer: textContainer, textContainerOffset: offset)
-        boundingRect = CGRectOffset(boundingRect, textContainerInset.left, textContainerInset.top)
-        boundingRect = CGRectInset(boundingRect, -(trimTextRangePadding.left + trimTextRangePadding.right), -(trimTextRangePadding.top + trimTextRangePadding.bottom))
-        return CGRectContainsPoint(boundingRect, point)
+        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
+        boundingRect = boundingRect.insetBy(dx: -(trimTextRangePadding.left + trimTextRangePadding.right), dy: -(trimTextRangePadding.top + trimTextRangePadding.bottom))
+        return boundingRect.contains(point)
     }
     
-    func countElements(text: String) -> Int {
+    func countElements(_ text: String) -> Int {
         return text.characters.count
     }
 }
@@ -216,15 +216,15 @@ class ReadMoreTextView: UITextView {
 
 extension NSLayoutManager {
     
-    func characterRangeThatFits(textContainer: NSTextContainer) -> NSRange {
-        var rangeThatFits = self.glyphRangeForTextContainer(textContainer)
-        rangeThatFits = self.characterRangeForGlyphRange(rangeThatFits, actualGlyphRange: nil)
+    func characterRangeThatFits(_ textContainer: NSTextContainer) -> NSRange {
+        var rangeThatFits = self.glyphRange(for: textContainer)
+        rangeThatFits = self.characterRange(forGlyphRange: rangeThatFits, actualGlyphRange: nil)
         return rangeThatFits
     }
     
-    func boundingRectForCharacterRange(range: NSRange, inTextContainer textContainer: NSTextContainer, textContainerOffset: CGPoint) -> CGRect {
-        let glyphRange = self.glyphRangeForCharacterRange(range, actualCharacterRange: nil)
-        let boundingRect = self.boundingRectForGlyphRange(glyphRange, inTextContainer: textContainer)
+    func boundingRectForCharacterRange(_ range: NSRange, inTextContainer textContainer: NSTextContainer, textContainerOffset: CGPoint) -> CGRect {
+        let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+        let boundingRect = self.boundingRect(forGlyphRange: glyphRange, in: textContainer)
         return boundingRect
     }
     

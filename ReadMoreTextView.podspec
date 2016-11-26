@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
   s.name         = "ReadMoreTextView"
-  s.version      = "0.0.1"
-  s.summary      = 'UITextView subclass with "Read more" behavior.'
+  s.version      = "1.0.0"
+  s.summary      = 'UITextView subclass with "read more"/"read less" capabilities.'
 
   s.description  = <<-DESC
 			UITextView subclass with "Read more" behavior.
 			
-			* Set trim text as an NSString or NSAttributedString
+			* Set "read more"/"read less" text as a String or NSAttributedString
 			* Set maximum number of lines to display
 			* Turn trim on/off
 			* Live updates and setup in Interface Builder 

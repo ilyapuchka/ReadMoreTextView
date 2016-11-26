@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,35 +16,60 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yf-iD-cBY" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="560" height="66"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="83" translatesAutoresizingMaskIntoConstraints="NO" id="7yf-iD-cBY" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="trimText" value="Read more"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="maximumNumberOfLines">
-                                        <integer key="value" value="3"/>
+                                        <integer key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="Read more"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value="Read less"/>
                                 </userDefinedRuntimeAttributes>
                             </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="33" text="Lorem ipsum" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-AP-kCJ" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumNumberOfLines">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyy-oP-Kwa">
+                                <state key="normal" title="Show less or more"/>
+                                <connections>
+                                    <action selector="toggleTrim:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8g3-5d-jrP"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="7yf-iD-cBY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="N63-eB-M8C"/>
-                            <constraint firstAttribute="trailing" secondItem="7yf-iD-cBY" secondAttribute="trailing" constant="20" id="YzI-eK-fP2"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7yf-iD-cBY" secondAttribute="bottom" constant="20" id="hxx-uI-9XY"/>
-                            <constraint firstItem="7yf-iD-cBY" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="20" id="plu-9j-4K7"/>
+                            <constraint firstItem="7yf-iD-cBY" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="7uF-5D-gfm"/>
+                            <constraint firstItem="7yf-iD-cBY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="Af2-KZ-n37"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7yf-iD-cBY" secondAttribute="trailing" constant="4" id="M5r-dM-HQk"/>
+                            <constraint firstItem="cOR-AP-kCJ" firstAttribute="top" secondItem="7yf-iD-cBY" secondAttribute="bottom" constant="20" id="T7C-4d-PKn"/>
+                            <constraint firstItem="Pyy-oP-Kwa" firstAttribute="top" secondItem="cOR-AP-kCJ" secondAttribute="bottom" constant="20" id="Yqg-4L-kMh"/>
+                            <constraint firstItem="Pyy-oP-Kwa" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="bqD-Fl-I6N"/>
+                            <constraint firstItem="cOR-AP-kCJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="p1H-oa-Wte"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cOR-AP-kCJ" secondAttribute="trailing" constant="4" id="u7f-Qu-J4r"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="readMoreTextView" destination="cOR-AP-kCJ" id="bvT-iX-UXL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
         </scene>
     </scenes>
 </document>

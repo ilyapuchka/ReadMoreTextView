@@ -1,9 +1,9 @@
 //
-//  TextView.swift
+//  ReadMoreTextView.swift
+//  ReadMoreTextView
 //
-//
-//  Created by Ilya Puchka on 04.04.15.
-//
+//  Created by Ilya Puchka on 06.04.15.
+//  Copyright (c) 2015 Ilya Puchka. All rights reserved.
 //
 
 import UIKit
@@ -31,50 +31,89 @@ class ReadMoreTextView: UITextView {
         isEditable = false
     }
     
-    convenience init(maximumNumberOfLines: Int, trimText: NSString?, shouldTrim: Bool) {
+    convenience init(maximumNumberOfLines: Int, readMoreText: String?, readLessText: String? = nil, shouldTrim: Bool) {
         self.init()
         self.maximumNumberOfLines = maximumNumberOfLines
-        self.trimText = trimText
+        self.readMoreText = readMoreText
+        self.readLessText = readLessText
         self.shouldTrim = shouldTrim
     }
     
-    convenience init(maximumNumberOfLines: Int, attributedTrimText: NSAttributedString?, shouldTrim: Bool) {
+    convenience init(maximumNumberOfLines: Int, attributedReadMoreText: NSAttributedString?, attributedReadLessText: NSAttributedString? = nil, shouldTrim: Bool) {
         self.init()
         self.maximumNumberOfLines = maximumNumberOfLines
-        self.attributedTrimText = attributedTrimText
+        self.attributedReadMoreText = attributedReadMoreText
+        self.attributedReadLessText = attributedReadLessText
         self.shouldTrim = shouldTrim
     }
     
     @IBInspectable
     var maximumNumberOfLines: Int = 0 {
-        didSet { setNeedsLayout() }
+        didSet {
+            originalMaximumNumberOfLines = maximumNumberOfLines
+            setNeedsLayout()
+        }
     }
+    
+    fileprivate var originalMaximumNumberOfLines: Int = 0
     
     @IBInspectable
-    var trimText: NSString? {
+    var readMoreText: String? {
         didSet { setNeedsLayout() }
     }
     
-    var attributedTrimText: NSAttributedString? {
+    var attributedReadMoreText: NSAttributedString? {
+        didSet { setNeedsLayout() }
+    }
+
+    @IBInspectable
+    var readLessText: String? {
         didSet { setNeedsLayout() }
     }
     
+    var attributedReadLessText: NSAttributedString? {
+        didSet { setNeedsLayout() }
+    }
+
     @IBInspectable
     var shouldTrim: Bool = false {
-        didSet { setNeedsLayout() }
+        didSet {
+            if shouldTrim {
+                maximumNumberOfLines = originalMaximumNumberOfLines
+            } else {
+                let _maximumNumberOfLines = maximumNumberOfLines
+                maximumNumberOfLines = 0
+                originalMaximumNumberOfLines = _maximumNumberOfLines
+            }
+            setNeedsLayout()
+        }
     }
     
-    var trimTextRangePadding: UIEdgeInsets = UIEdgeInsets.zero
-    var appendTrimTextPrefix: Bool = true
-    var trimTextPrefix: String = "..."
+    var readMoreTextRangePadding: UIEdgeInsets = UIEdgeInsets.zero
     
+    var appendReadMoreTextPrefix: Bool = true {
+        didSet { setNeedsLayout() }
+    }
+    var readMoreTextPrefix: String = "..." {
+        didSet { setNeedsLayout() }
+    }
+
+    var readLessTextRangePadding: UIEdgeInsets = UIEdgeInsets.zero
+    
+    var appendReadLessTextPrefix: Bool = true {
+        didSet { setNeedsLayout() }
+    }
+    var readLessTextPrefix: String = "" {
+        didSet { setNeedsLayout() }
+    }
+
     fileprivate var originalText: String!
     
     override var text: String! {
         didSet {
             originalText = text
             originalAttributedText = nil
-            if needsTrim() { updateText() }
+            if needsTrim() { showLessText() }
         }
     }
     
@@ -84,32 +123,33 @@ class ReadMoreTextView: UITextView {
         didSet {
             originalAttributedText = attributedText
             originalText = nil
-            if needsTrim() { updateText() }
+            if needsTrim() { showLessText() }
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        needsTrim() ? updateText() : resetText()
+        needsTrim() ? showLessText() : showMoreText()
     }
     
     func needsTrim() -> Bool {
-        return shouldTrim && _trimText != nil
+        return shouldTrim && _readMoreText != nil
     }
-    
-    func updateText() {
+
+    func showLessText() {
         textContainer.maximumNumberOfLines = maximumNumberOfLines
+        layoutManager.invalidateLayout(forCharacterRange: layoutManager.characterRangeThatFits(textContainer), actualCharacterRange: nil)
         textContainer.size = CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude)
         
-        let range = rangeToReplaceWithTrimText()
+        let range = rangeToReplaceWithReadMoreText()
         if range.location != NSNotFound {
-            let prefix = appendTrimTextPrefix ? trimTextPrefix : ""
+            let prefix = appendReadMoreTextPrefix ? readMoreTextPrefix : ""
             
-            if let text = trimText?.mutableCopy() as? NSMutableString {
-                text.insert("\(prefix) ", at: 0)
+            if var text = readMoreText {
+                text = "\(prefix) \(text)"
                 textStorage.replaceCharacters(in: range, with: text as String)
             }
-            else if let text = attributedTrimText?.mutableCopy() as? NSMutableAttributedString {
+            else if let text = attributedReadMoreText?.mutableCopy() as? NSMutableAttributedString {
                 text.insert(NSAttributedString(string: "\(prefix) "), at: 0)
                 textStorage.replaceCharacters(in: range, with: text)
             }
@@ -117,13 +157,35 @@ class ReadMoreTextView: UITextView {
         invalidateIntrinsicContentSize()
     }
     
-    func resetText() {
+    func showMoreText() {
         textContainer.maximumNumberOfLines = 0
-        if originalText != nil {
-            textStorage.replaceCharacters(in: NSMakeRange(0, countElements(text!)), with: originalText)
+        let prefix = appendReadLessTextPrefix ? readLessTextPrefix : ""
+        if var originalText = originalText {
+            if var readLessText = readLessText {
+                readLessText = "\(prefix) \(readLessText)"
+                originalText.append(readLessText)
+                textStorage.replaceCharacters(in: NSRange(location: 0, length: text.length), with: originalText)
+            } else if let attributedReadLessText = attributedReadLessText?.mutableCopy() as? NSMutableAttributedString {
+                let originalTextAttributes = textStorage.attributes(at: 0, effectiveRange: nil)
+                let originalAttributedText = NSMutableAttributedString(string: originalText, attributes: originalTextAttributes)
+                attributedReadLessText.insert(NSAttributedString(string: "\(prefix) "), at: 0)
+                originalAttributedText.append(attributedReadLessText)
+                textStorage.replaceCharacters(in: NSRange(location: 0, length: text.length), with: originalAttributedText)
+            } else {
+                textStorage.replaceCharacters(in: NSRange(location: 0, length: text.length), with: originalText)
+            }
         }
-        else if originalAttributedText != nil {
-            textStorage.replaceCharacters(in: NSMakeRange(0, countElements(text!)), with: originalAttributedText)
+        else if let originalAttributedText = originalAttributedText.mutableCopy() as? NSMutableAttributedString {
+            if let attributedReadLessText = attributedReadLessText?.mutableCopy() as? NSMutableAttributedString {
+                attributedReadLessText.insert(NSAttributedString(string: "\(prefix) "), at: 0)
+                originalAttributedText.append(attributedReadLessText)
+            } else if var readLessText = readLessText {
+                readLessText = "\(prefix) \(readLessText)"
+                let attributes = originalAttributedText.attributes(at: originalAttributedText.string.length - 1, effectiveRange: nil)
+                let attributedReadLessText = NSAttributedString(string: readLessText, attributes: attributes)
+                originalAttributedText.append(attributedReadLessText)
+            }
+            textStorage.replaceCharacters(in: NSMakeRange(0, text.length), with: originalAttributedText)
         }
         invalidateIntrinsicContentSize()
     }
@@ -136,43 +198,49 @@ class ReadMoreTextView: UITextView {
         return intrinsicContentSize
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        
-        if needsTrim() && pointInTrimTextRange(point) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let point = touches.first?.location(in: self) else { return }
+
+        if needsTrim() && pointIsInReadMoreTextRange(point) {
             shouldTrim = false
-            maximumNumberOfLines = 0
+        } else if _readLessText != nil && pointIsInReadLessTextRange(point) {
+            shouldTrim = true
         }
-        
-        return super.hitTest(point, with: event)
     }
     
     //MARK: Private methods
     
-    fileprivate var _trimText: NSString? {
+    fileprivate var _readMoreText: String? {
         get {
-            return trimText ?? attributedTrimText?.string as NSString?
+            return readMoreText ?? attributedReadMoreText?.string
         }
     }
     
-    fileprivate var _trimTextPrefixLength: Int {
+    fileprivate var _readMoreTextPrefixLength: Int {
         get {
-            return appendTrimTextPrefix ? countElements(trimTextPrefix) + 1 : 1
+            return appendReadMoreTextPrefix ? readMoreTextPrefix.length + 1 : 1
         }
     }
     
+    fileprivate var _readLessText: String? {
+        get {
+            return readLessText ?? attributedReadLessText?.string
+        }
+    }
+
+    fileprivate var _readLessTextPrefixLength: Int {
+        get {
+            return appendReadLessTextPrefix ? readLessTextPrefix.length + 1 : 1
+        }
+    }
+
     fileprivate var _originalTextLength: Int {
         get {
-            if originalText != nil {
-                return countElements(originalText!)
-            }
-            else  if originalAttributedText != nil {
-                return originalAttributedText!.length
-            }
-            return 0
+            return originalText?.length ?? originalAttributedText?.length ?? 0
         }
     }
     
-    fileprivate func rangeToReplaceWithTrimText() -> NSRange {
+    fileprivate func rangeToReplaceWithReadMoreText() -> NSRange {
         let emptyRange = NSMakeRange(NSNotFound, 0)
         
         var rangeToReplace = layoutManager.characterRangeThatFits(textContainer)
@@ -180,7 +248,7 @@ class ReadMoreTextView: UITextView {
             rangeToReplace = emptyRange
         }
         else {
-            rangeToReplace.location = NSMaxRange(rangeToReplace) - _trimText!.length - _trimTextPrefixLength
+            rangeToReplace.location = NSMaxRange(rangeToReplace) - _readMoreText!.length - _readMoreTextPrefixLength
             if rangeToReplace.location < 0 {
                 rangeToReplace = emptyRange
             }
@@ -191,28 +259,41 @@ class ReadMoreTextView: UITextView {
         return rangeToReplace
     }
     
-    fileprivate func trimTextRange() -> NSRange {
-        var trimTextRange = rangeToReplaceWithTrimText()
-        if trimTextRange.location != NSNotFound {
-            trimTextRange.length = _trimTextPrefixLength + _trimText!.length
+    fileprivate func readMoreTextRange() -> NSRange {
+        var readMoreTextRange = rangeToReplaceWithReadMoreText()
+        if readMoreTextRange.location != NSNotFound {
+            readMoreTextRange.length = _readMoreTextPrefixLength + _readMoreText!.length
         }
-        return trimTextRange
+        return readMoreTextRange
     }
-    
-    fileprivate func pointInTrimTextRange(_ point: CGPoint) -> Bool {
+
+    fileprivate func pointIsInReadMoreTextRange(_ point: CGPoint) -> Bool {
         let offset = CGPoint(x: textContainerInset.left, y: textContainerInset.top)
-        var boundingRect = layoutManager.boundingRectForCharacterRange(trimTextRange(), inTextContainer: textContainer, textContainerOffset: offset)
+        var boundingRect = layoutManager.boundingRectForCharacterRange(readMoreTextRange(), inTextContainer: textContainer, textContainerOffset: offset)
         boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
-        boundingRect = boundingRect.insetBy(dx: -(trimTextRangePadding.left + trimTextRangePadding.right), dy: -(trimTextRangePadding.top + trimTextRangePadding.bottom))
+        boundingRect = boundingRect.insetBy(dx: -(readMoreTextRangePadding.left + readMoreTextRangePadding.right), dy: -(readMoreTextRangePadding.top + readMoreTextRangePadding.bottom))
         return boundingRect.contains(point)
     }
-    
-    func countElements(_ text: String) -> Int {
-        return text.characters.count
+
+    fileprivate func readLessTextRange() -> NSRange {
+        return NSRange(location: _originalTextLength, length: _readLessTextPrefixLength + _readLessText!.length)
     }
+
+    fileprivate func pointIsInReadLessTextRange(_ point: CGPoint) -> Bool {
+        let offset = CGPoint(x: textContainerInset.left, y: textContainerInset.top)
+        var boundingRect = layoutManager.boundingRectForCharacterRange(readLessTextRange(), inTextContainer: textContainer, textContainerOffset: offset)
+        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
+        boundingRect = boundingRect.insetBy(dx: -(readLessTextRangePadding.left + readLessTextRangePadding.right), dy: -(readLessTextRangePadding.top + readLessTextRangePadding.bottom))
+        return boundingRect.contains(point)
+    }
+
 }
 
-//MARK: NSLayoutManager extension
+extension String {
+    var length: Int {
+        return characters.count
+    }
+}
 
 extension NSLayoutManager {
     

@@ -50,21 +50,65 @@
                                     <action selector="toggleTrim:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8g3-5d-jrP"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n1Q-KB-Lhd">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReadMoreCell" id="T6X-yQ-sZ9">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T6X-yQ-sZ9" id="dhB-Yu-31g">
+                                            <frame key="frameInset" width="375" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="83" translatesAutoresizingMaskIntoConstraints="NO" id="PSZ-8o-RMG" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="maximumNumberOfLines">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="Read more"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value="Read less"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="PSZ-8o-RMG" firstAttribute="top" secondItem="dhB-Yu-31g" secondAttribute="top" id="4Od-OC-I74"/>
+                                                <constraint firstAttribute="bottom" secondItem="PSZ-8o-RMG" secondAttribute="bottom" id="Inh-jG-4DU"/>
+                                                <constraint firstAttribute="trailing" secondItem="PSZ-8o-RMG" secondAttribute="trailing" id="SzD-SK-A1I"/>
+                                                <constraint firstItem="PSZ-8o-RMG" firstAttribute="leading" secondItem="dhB-Yu-31g" secondAttribute="leading" id="ige-55-0fs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="nZ0-Om-Ht8"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="G2G-7Q-Q9p"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="n1Q-KB-Lhd" firstAttribute="top" secondItem="Pyy-oP-Kwa" secondAttribute="bottom" constant="8" id="5vE-Dx-wcw"/>
                             <constraint firstItem="7yf-iD-cBY" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="7uF-5D-gfm"/>
                             <constraint firstItem="7yf-iD-cBY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="Af2-KZ-n37"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7yf-iD-cBY" secondAttribute="trailing" constant="4" id="M5r-dM-HQk"/>
+                            <constraint firstItem="n1Q-KB-Lhd" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="N2b-kz-2k8"/>
                             <constraint firstItem="cOR-AP-kCJ" firstAttribute="top" secondItem="7yf-iD-cBY" secondAttribute="bottom" constant="20" id="T7C-4d-PKn"/>
                             <constraint firstItem="Pyy-oP-Kwa" firstAttribute="top" secondItem="cOR-AP-kCJ" secondAttribute="bottom" constant="20" id="Yqg-4L-kMh"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="n1Q-KB-Lhd" secondAttribute="bottom" id="bAh-Vj-Fhg"/>
                             <constraint firstItem="Pyy-oP-Kwa" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="bqD-Fl-I6N"/>
                             <constraint firstItem="cOR-AP-kCJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="p1H-oa-Wte"/>
+                            <constraint firstAttribute="trailing" secondItem="n1Q-KB-Lhd" secondAttribute="trailing" id="rg4-cT-ibY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cOR-AP-kCJ" secondAttribute="trailing" constant="4" id="u7f-Qu-J4r"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="readMoreTextView" destination="cOR-AP-kCJ" id="bvT-iX-UXL"/>
+                        <outlet property="tableView" destination="n1Q-KB-Lhd" id="LhJ-DN-hTL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

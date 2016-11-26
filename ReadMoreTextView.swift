@@ -47,6 +47,8 @@ class ReadMoreTextView: UITextView {
         self.shouldTrim = shouldTrim
     }
     
+    var onSizeChage: (ReadMoreTextView)->() = { _ in }
+    
     @IBInspectable
     var maximumNumberOfLines: Int = 0 {
         didSet {
@@ -155,6 +157,7 @@ class ReadMoreTextView: UITextView {
             }
         }
         invalidateIntrinsicContentSize()
+        onSizeChage(self)
     }
     
     func showMoreText() {
@@ -188,6 +191,7 @@ class ReadMoreTextView: UITextView {
             textStorage.replaceCharacters(in: NSMakeRange(0, text.length), with: originalAttributedText)
         }
         invalidateIntrinsicContentSize()
+        onSizeChage(self)
     }
     
     override var intrinsicContentSize : CGSize {

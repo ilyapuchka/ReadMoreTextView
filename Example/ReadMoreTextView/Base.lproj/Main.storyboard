@@ -29,8 +29,8 @@
                                         <integer key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="Read more"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value="Read less"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="... Read more"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value=" Read less"/>
                                 </userDefinedRuntimeAttributes>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="33" text="Lorem ipsum" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-AP-kCJ" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
@@ -70,8 +70,8 @@
                                                             <integer key="value" value="4"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="Read more"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value="Read less"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="... Read more"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value=" Read less"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
                                             </subviews>

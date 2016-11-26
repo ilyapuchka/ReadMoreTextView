@@ -1,8 +1,13 @@
-[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+[![Version](https://img.shields.io/cocoapods/v/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)
+[![License](https://img.shields.io/cocoapods/l/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)
+[![Platform](https://img.shields.io/cocoapods/p/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)
+[![Swift Version](https://img.shields.io/badge/Swift-2.3--3.0-F16D39.svg?style=flat)](https://developer.apple.com/swift)
 
 # ReadMoreTextView
 
-UITextView subclass with "Read more" behavior.
+UITextView subclass with "read more"/"read less" capabilities.
+
+![](screenshot.png)
 
 ##Usage
 
@@ -11,8 +16,9 @@ UITextView subclass with "Read more" behavior.
 	textView.text = "Lorem ipsum dolor ..."
 
 	textView.shouldTrim = true
-	textView.maximumNumberOfLines = 3
-	textView.trimText = "Read more"
+	textView.maximumNumberOfLines = 4
+	textView.readMoreText = "... Read more"
+	textView.readLessText = " Read less"
 
 
 ##Installation

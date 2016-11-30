@@ -7,7 +7,7 @@
 
 UITextView subclass with "read more"/"read less" capabilities.
 
-![](screenshot.png)
+![](screenshot.gif)
 
 ##Usage
 

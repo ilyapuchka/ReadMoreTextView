@@ -76,7 +76,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ReadMoreCell", forIndexPath: indexPath)
         let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
-        readMoreTextView.onSizeChage = { [unowned tableView] _ in
+        readMoreTextView.onSizeChange = { [unowned tableView] _ in
             tableView.reloadData()
         }
         return cell

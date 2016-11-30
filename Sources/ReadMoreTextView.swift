@@ -56,7 +56,7 @@ public class ReadMoreTextView: UITextView {
     }
     
     /**Block to be invoked when text view changes its content size.*/
-    public var onSizeChage: (ReadMoreTextView)->() = { _ in }
+    public var onSizeChange: (ReadMoreTextView)->() = { _ in }
     
     /**
      The maximum number of lines that the text view can display. If text does not fit that number it will be trimmed.
@@ -278,7 +278,7 @@ public class ReadMoreTextView: UITextView {
             #endif
         }
         invalidateIntrinsicContentSize()
-        onSizeChage(self)
+        onSizeChange(self)
     }
     
     private func showMoreText() {
@@ -332,7 +332,7 @@ public class ReadMoreTextView: UITextView {
             #endif
         }
         invalidateIntrinsicContentSize()
-        onSizeChage(self)
+        onSizeChange(self)
     }
     
     private func rangeToReplaceWithReadMoreText() -> NSRange {

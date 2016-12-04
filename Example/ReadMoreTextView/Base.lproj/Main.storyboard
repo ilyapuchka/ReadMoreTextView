@@ -29,14 +29,13 @@
                                         <integer key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldTrim" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="readMoreText" value="... Read more"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="readLessText" value=" Read less"/>
                                 </userDefinedRuntimeAttributes>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="33" text="Lorem ipsum" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-AP-kCJ" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="335" placeholderIntrinsicHeight="33" editable="NO" text="Lorem ipsum" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-AP-kCJ" customClass="ReadMoreTextView" customModule="ReadMoreTextView" customModuleProvider="target">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="maximumNumberOfLines">
                                         <integer key="value" value="0"/>
@@ -92,15 +91,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="n1Q-KB-Lhd" firstAttribute="top" secondItem="Pyy-oP-Kwa" secondAttribute="bottom" constant="8" id="5vE-Dx-wcw"/>
-                            <constraint firstItem="7yf-iD-cBY" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="7uF-5D-gfm"/>
+                            <constraint firstItem="n1Q-KB-Lhd" firstAttribute="top" secondItem="Pyy-oP-Kwa" secondAttribute="bottom" id="5vE-Dx-wcw"/>
                             <constraint firstItem="7yf-iD-cBY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="Af2-KZ-n37"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7yf-iD-cBY" secondAttribute="trailing" constant="4" id="M5r-dM-HQk"/>
                             <constraint firstItem="n1Q-KB-Lhd" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="N2b-kz-2k8"/>
-                            <constraint firstItem="cOR-AP-kCJ" firstAttribute="top" secondItem="7yf-iD-cBY" secondAttribute="bottom" constant="20" id="T7C-4d-PKn"/>
-                            <constraint firstItem="Pyy-oP-Kwa" firstAttribute="top" secondItem="cOR-AP-kCJ" secondAttribute="bottom" constant="20" id="Yqg-4L-kMh"/>
+                            <constraint firstItem="cOR-AP-kCJ" firstAttribute="top" secondItem="7yf-iD-cBY" secondAttribute="bottom" id="T7C-4d-PKn"/>
+                            <constraint firstItem="Pyy-oP-Kwa" firstAttribute="top" secondItem="cOR-AP-kCJ" secondAttribute="bottom" id="Yqg-4L-kMh"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="n1Q-KB-Lhd" secondAttribute="bottom" id="bAh-Vj-Fhg"/>
                             <constraint firstItem="Pyy-oP-Kwa" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="bqD-Fl-I6N"/>
+                            <constraint firstItem="7yf-iD-cBY" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" constant="20" id="fkF-Id-VvP"/>
                             <constraint firstItem="cOR-AP-kCJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="p1H-oa-Wte"/>
                             <constraint firstAttribute="trailing" secondItem="n1Q-KB-Lhd" secondAttribute="trailing" id="rg4-cT-ibY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cOR-AP-kCJ" secondAttribute="trailing" constant="4" id="u7f-Qu-J4r"/>

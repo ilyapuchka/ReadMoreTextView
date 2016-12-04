@@ -59,11 +59,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReadMoreCell", for: indexPath)
         let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
-        readMoreTextView.onSizeChage = { [unowned tableView] _ in
+        readMoreTextView.onSizeChange = { [unowned tableView] _ in
             tableView.reloadData()
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)!
+        let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
+        readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
+    }
+    
     #else
     @IBAction func toggleTrim(sender: UIButton) {
         readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
@@ -80,6 +87,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.reloadData()
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let readMoreTextView = cell?.contentView.viewWithTag(1) as! ReadMoreTextView
+        readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
     }
     #endif
     

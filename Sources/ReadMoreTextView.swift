@@ -192,6 +192,17 @@ public class ReadMoreTextView: UITextView {
     }
     
     public override var attributedText: NSAttributedString! {
+        willSet {
+            if #available(iOS 9.0, *) { return }
+            //on iOS 8 text view should be selectable to properly set attributed text
+            if newValue != nil {
+                #if swift(>=3.0)
+                    isSelectable = true
+                #else
+                    selectable = true
+                #endif
+            }
+        }
         didSet {
             _originalAttributedText = attributedText
             _originalText = nil

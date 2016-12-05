@@ -161,6 +161,14 @@ public class ReadMoreTextView: UITextView {
     }
     
     /**
+     Force to update trimming on the next layout pass. To update right away call `layoutIfNeeded` right after.
+    */
+    public func setNeedsUpdateTrim() {
+        _needsUpdateTrim = true
+        setNeedsLayout()
+    }
+    
+    /**
      A padding around "read more" text to adjust touchable area.
      If text is trimmed touching in this area will change `shouldTream` to `false` and remove trimming.
      That will cause text view to change it's content size. Use `onSizeChange` to adjust layout on that event.
@@ -205,6 +213,12 @@ public class ReadMoreTextView: UITextView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if _needsUpdateTrim {
+            //reset text to force update trim
+            textStorage.setAttributedString(_originalAttributedText)
+            _needsUpdateTrim = false
+        }
         needsTrim() ? showLessText() : showMoreText()
     }
     
@@ -283,6 +297,7 @@ public class ReadMoreTextView: UITextView {
     
     //MARK: Private methods
     
+    private var _needsUpdateTrim = false
     private var _originalMaximumNumberOfLines: Int = 0
     private var _originalAttributedText: NSAttributedString!
     private var _originalTextLength: Int {
@@ -476,6 +491,7 @@ public class ReadMoreTextView: UITextView {
             }
         #endif
     }
+    
 }
 
 extension String {

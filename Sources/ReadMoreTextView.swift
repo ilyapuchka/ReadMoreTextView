@@ -96,54 +96,46 @@ public class ReadMoreTextView: UITextView {
     @IBInspectable
     public var readMoreText: String? {
         get {
-            return _readMoreTextStorage
+            return attributedReadMoreText?.string
         }
         set {
-            _readMoreTextStorage = newValue
-            _attributedReadMoreTextStorage = nil
-            setNeedsLayout()
+            if let text = newValue {
+                attributedReadMoreText = attributedStringWithDefaultAttributes(from: text)
+            } else {
+                attributedReadMoreText = nil
+            }
         }
     }
     
     /**The attributed text to trim the original text. Setting this property resets `readMoreText`.*/
     public var attributedReadMoreText: NSAttributedString? {
-        get {
-            return _attributedReadMoreTextStorage
-        }
-        set {
-            _attributedReadMoreTextStorage = newValue
-            _readMoreTextStorage = nil
+        didSet {
             setNeedsLayout()
         }
     }
     
     /**
      The text to append to the original text when not trimming.
-     Setting this property resets `attributedReadLessText`.
      */
     @IBInspectable
     public var readLessText: String? {
         get {
-            return _readLessTextStorage
+            return attributedReadLessText?.string
         }
         set {
-            _readLessTextStorage = newValue
-            _attributedReadLessTextStorage = nil
-            setNeedsLayout()
+            if let text = newValue {
+                attributedReadLessText = attributedStringWithDefaultAttributes(from: text)
+            } else {
+                attributedReadLessText = nil
+            }
         }
     }
     
     /**
      The attributed text to append to the original text when not trimming.
-     Setting this property resets `readLessText`.
      */
     public var attributedReadLessText: NSAttributedString? {
-        get {
-            return _attributedReadLessTextStorage
-        }
-        set {
-            _attributedReadLessTextStorage = newValue
-            _readLessTextStorage = nil
+        didSet {
             setNeedsLayout()
         }
     }
@@ -185,9 +177,11 @@ public class ReadMoreTextView: UITextView {
     
     public override var text: String! {
         didSet {
-            _originalText = text
-            _originalAttributedText = nil
-            setNeedsLayout()
+            if let text = text {
+                _originalAttributedText = attributedStringWithDefaultAttributes(from: text)
+            } else {
+                _originalAttributedText = nil
+            }
         }
     }
     
@@ -205,7 +199,6 @@ public class ReadMoreTextView: UITextView {
         }
         didSet {
             _originalAttributedText = attributedText
-            _originalText = nil
             setNeedsLayout()
         }
     }
@@ -290,40 +283,37 @@ public class ReadMoreTextView: UITextView {
     
     //MARK: Private methods
     
-    private var _readMoreTextStorage: String?
-    private var _attributedReadMoreTextStorage: NSAttributedString?
-    private var _readMoreText: String? {
-        get {
-            return _readMoreTextStorage ?? _attributedReadMoreTextStorage?.string
-        }
-    }
-    
-    private var _readLessTextStorage: String?
-    private var _attributedReadLessTextStorage: NSAttributedString?
-    private var _readLessText: String? {
-        get {
-            return _readLessTextStorage ?? _attributedReadLessTextStorage?.string
-        }
-    }
-    
     private var _originalMaximumNumberOfLines: Int = 0
-    private var _originalText: String!
     private var _originalAttributedText: NSAttributedString!
     private var _originalTextLength: Int {
         get {
-            return _originalText?.length ?? _originalAttributedText?.length ?? 0
+            return _originalAttributedText?.length ?? 0
         }
     }
     
+    private func attributedStringWithDefaultAttributes(from text: String) -> NSAttributedString {
+        #if swift(>=3.0)
+            return NSAttributedString(string: text, attributes: [
+                NSFontAttributeName: font ?? UIFont.systemFont(ofSize: 14),
+                NSForegroundColorAttributeName: textColor ?? UIColor.black
+            ])
+        #else
+            return NSAttributedString(string: text, attributes: [
+                NSFontAttributeName: font ?? UIFont.systemFontOfSize(14),
+                NSForegroundColorAttributeName: textColor ?? UIColor.blackColor()
+                ])
+        #endif
+    }
+    
     private func needsTrim() -> Bool {
-        return shouldTrim && _readMoreText != nil
+        return shouldTrim && readMoreText != nil
     }
     
     private func showLessText() {
         #if swift(>=3.0)
-            if let _readMoreText = _readMoreText, text.hasSuffix(_readMoreText) { return }
+            if let readMoreText = readMoreText, text.hasSuffix(readMoreText) { return }
         #else
-            if let _readMoreText = _readMoreText where text.hasSuffix(_readMoreText) { return }
+            if let readMoreText = readMoreText where text.hasSuffix(readMoreText) { return }
         #endif
         
         let oldHeight = intrinsicContentHeight
@@ -348,26 +338,20 @@ public class ReadMoreTextView: UITextView {
         let range = rangeToReplaceWithReadMoreText()
         guard range.location != NSNotFound else { return }
         
-        #if swift(>=3.0)
-            if let text = readMoreText {
+        if let text = attributedReadMoreText {
+            #if swift(>=3.0)
                 textStorage.replaceCharacters(in: range, with: text)
-            } else if let text = attributedReadMoreText {
-                textStorage.replaceCharacters(in: range, with: text)
-            }
-        #else
-            if let text = readMoreText {
-                textStorage.replaceCharactersInRange(range, withString: text)
-            } else if let text = attributedReadMoreText {
+            #else
                 textStorage.replaceCharactersInRange(range, withAttributedString: text)
-            }
-        #endif
+            #endif
+        }
     }
     
     private func showMoreText() {
         #if swift(>=3.0)
-            if let _readLessText = _readLessText, text.hasSuffix(_readLessText) { return }
+            if let readLessText = readLessText, text.hasSuffix(readLessText) { return }
         #else
-            if let _readLessText = _readLessText where text.hasSuffix(_readLessText) { return }
+            if let readLessText = readLessText where text.hasSuffix(readLessText) { return }
         #endif
 
         let oldHeight = intrinsicContentHeight
@@ -383,48 +367,14 @@ public class ReadMoreTextView: UITextView {
         
         let range = NSRange(location: 0, length: text.length)
         
-        if var originalText = _originalText {
-            #if swift(>=3.0)
-                if let readLessText = readLessText {
-                    originalText.append(readLessText)
-                    textStorage.replaceCharacters(in: range, with: originalText)
-                } else if let attributedReadLessText = attributedReadLessText?.mutableCopy() as? NSMutableAttributedString {
-                    let originalTextAttributes = textStorage.attributes(at: 0, effectiveRange: nil)
-                    let originalAttributedText = NSMutableAttributedString(string: originalText, attributes: originalTextAttributes)
-                    originalAttributedText.append(attributedReadLessText)
-                    textStorage.replaceCharacters(in: range, with: originalAttributedText)
-                } else {
-                    textStorage.replaceCharacters(in: range, with: originalText)
-                }
-            #else
-                if let readLessText = readLessText {
-                    originalText.appendContentsOf(readLessText)
-                    textStorage.replaceCharactersInRange(range, withString: originalText)
-                } else if let attributedReadLessText = attributedReadLessText?.mutableCopy() as? NSMutableAttributedString {
-                    let originalTextAttributes = textStorage.attributesAtIndex(0, effectiveRange: nil)
-                    let originalAttributedText = NSMutableAttributedString(string: originalText, attributes: originalTextAttributes)
-                    originalAttributedText.appendAttributedString(attributedReadLessText)
-                    textStorage.replaceCharactersInRange(range, withAttributedString: originalAttributedText)
-                } else {
-                    textStorage.replaceCharactersInRange(range, withString: originalText)
-                }
-            #endif
-        } else if let originalAttributedText = _originalAttributedText.mutableCopy() as? NSMutableAttributedString {
+        if let originalAttributedText = _originalAttributedText?.mutableCopy() as? NSMutableAttributedString {
             #if swift(>=3.0)
                 if let attributedReadLessText = attributedReadLessText {
                     originalAttributedText.append(attributedReadLessText)
-                } else if let readLessText = readLessText {
-                    let attributes = originalAttributedText.attributes(at: originalAttributedText.string.length - 1, effectiveRange: nil)
-                    let attributedReadLessText = NSAttributedString(string: readLessText, attributes: attributes)
-                    originalAttributedText.append(attributedReadLessText)
                 }
-                textStorage.replaceCharacters(in: NSMakeRange(0, text.length), with: originalAttributedText)
+                textStorage.replaceCharacters(in: range, with: originalAttributedText)
             #else
                 if let attributedReadLessText = attributedReadLessText {
-                    originalAttributedText.appendAttributedString(attributedReadLessText)
-                } else if let readLessText = readLessText {
-                    let attributes = originalAttributedText.attributesAtIndex(originalAttributedText.string.length - 1, effectiveRange: nil)
-                    let attributedReadLessText = NSAttributedString(string: readLessText, attributes: attributes)
                     originalAttributedText.appendAttributedString(attributedReadLessText)
                 }
                 textStorage.replaceCharactersInRange(range, withAttributedString: originalAttributedText)
@@ -463,7 +413,7 @@ public class ReadMoreTextView: UITextView {
             #endif
             return characterIndex - 1
         } else {
-            return NSMaxRange(rangeThatFits) - _readMoreText!.length
+            return NSMaxRange(rangeThatFits) - readMoreText!.length
         }
     }
     
@@ -480,19 +430,19 @@ public class ReadMoreTextView: UITextView {
     private func readMoreTextRange() -> NSRange {
         var readMoreTextRange = rangeToReplaceWithReadMoreText()
         if readMoreTextRange.location != NSNotFound {
-            readMoreTextRange.length = _readMoreText!.length + 1
+            readMoreTextRange.length = readMoreText!.length + 1
         }
         return readMoreTextRange
     }
     
     private func readLessTextRange() -> NSRange {
-        return NSRange(location: _originalTextLength, length: _readLessText!.length + 1)
+        return NSRange(location: _originalTextLength, length: readLessText!.length + 1)
     }
 
     private func pointIsInReadMoreOrReadLessTextRange(point aPoint: CGPoint) -> Bool? {
         if needsTrim() && pointIsInTextRange(point: aPoint, range: readMoreTextRange(), padding: readMoreTextPadding) {
             return false
-        } else if _readLessText != nil && pointIsInTextRange(point: aPoint, range: readLessTextRange(), padding: readLessTextPadding) {
+        } else if readLessText != nil && pointIsInTextRange(point: aPoint, range: readLessTextRange(), padding: readLessTextPadding) {
             return true
         }
         return nil
@@ -559,5 +509,3 @@ extension NSLayoutManager {
     }
     
 }
-
-

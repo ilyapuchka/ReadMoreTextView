@@ -47,6 +47,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         readMoreTextView.shouldTrim = true
     }
 
+    override func viewDidLayoutSubviews() {
+        tableView.reloadData()
+    }
+
     #if swift(>=3.0)
     @IBAction func toggleTrim(_ sender: UIButton) {
         readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
@@ -62,6 +66,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         readMoreTextView.onSizeChange = { [unowned tableView] _ in
             tableView.reloadData()
         }
+        readMoreTextView.setNeedsUpdateTrim()
+        readMoreTextView.layoutIfNeeded()
         return cell
     }
     
@@ -69,6 +75,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.cellForRow(at: indexPath)!
         let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
         readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: {_ in
+            self.readMoreTextView.setNeedsUpdateTrim()
+        }, completion: nil)
     }
     
     #else
@@ -86,6 +98,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         readMoreTextView.onSizeChange = { [unowned tableView] _ in
             tableView.reloadData()
         }
+        readMoreTextView.setNeedsUpdateTrim()
+        readMoreTextView.layoutIfNeeded()
         return cell
     }
     
@@ -94,6 +108,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let readMoreTextView = cell?.contentView.viewWithTag(1) as! ReadMoreTextView
         readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
     }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animateAlongsideTransition({_ in
+            self.readMoreTextView.setNeedsUpdateTrim()
+            }, completion: nil)
+    }
+    
     #endif
     
 }

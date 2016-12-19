@@ -108,6 +108,7 @@
                     <connections>
                         <outlet property="readMoreTextView" destination="cOR-AP-kCJ" id="bvT-iX-UXL"/>
                         <outlet property="tableView" destination="n1Q-KB-Lhd" id="LhJ-DN-hTL"/>
+                        <outlet property="topReadMoreTextView" destination="7yf-iD-cBY" id="FXd-Kn-CWH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

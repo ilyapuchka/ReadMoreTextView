@@ -216,7 +216,7 @@ public class ReadMoreTextView: UITextView {
         
         if _needsUpdateTrim {
             //reset text to force update trim
-            textStorage.setAttributedString(_originalAttributedText)
+            attributedText = _originalAttributedText
             _needsUpdateTrim = false
         }
         needsTrim() ? showLessText() : showMoreText()

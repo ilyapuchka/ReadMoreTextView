@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReadMoreTextView
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

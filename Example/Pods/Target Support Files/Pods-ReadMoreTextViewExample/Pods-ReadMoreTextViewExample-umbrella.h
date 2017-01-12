@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_ReadMoreTextViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_ReadMoreTextViewVersionString[];
+FOUNDATION_EXPORT double Pods_ReadMoreTextViewExampleVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_ReadMoreTextViewExampleVersionString[];
 

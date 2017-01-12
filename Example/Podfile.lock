@@ -1,5 +1,5 @@
 PODS:
-  - ReadMoreTextView (1.0.0)
+  - ReadMoreTextView (1.1.0)
 
 DEPENDENCIES:
   - ReadMoreTextView (from `..`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: ..
 
 SPEC CHECKSUMS:
-  ReadMoreTextView: dc67d7709ec5aeb097e33b8f6dd889d36bc6381e
+  ReadMoreTextView: 8d140284b6621571642fb6824f1774b119358e41
 
-PODFILE CHECKSUM: 2366308016abb98d5b6b067ebc6c24b0e7ca2c03
+PODFILE CHECKSUM: 72daab87156ddc53981cfb66c0eac16103dd9957
 
 COCOAPODS: 1.2.0.beta.1

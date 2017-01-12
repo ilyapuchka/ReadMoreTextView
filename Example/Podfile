@@ -1,4 +1,4 @@
-target 'ReadMoreTextView'
+target 'ReadMoreTextViewExample'
 
 use_frameworks!
 

@@ -13,7 +13,7 @@
 		094F38641AD1DD6E00BCD70D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 094F38631AD1DD6E00BCD70D /* Images.xcassets */; };
 		094F38671AD1DD6E00BCD70D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094F38651AD1DD6E00BCD70D /* LaunchScreen.xib */; };
 		094F38731AD1DD6E00BCD70D /* ReadMoreTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F38721AD1DD6E00BCD70D /* ReadMoreTextViewTests.swift */; };
-		0AC9E0D135C48BA140B63A1B /* Pods_ReadMoreTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D505CE2AB5839925F5E2903 /* Pods_ReadMoreTextView.framework */; };
+		4BA60EAA9E49C9F33187FAA4 /* Pods_ReadMoreTextViewExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481361E09D26A602BE5C1B45 /* Pods_ReadMoreTextViewExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +37,9 @@
 		094F386C1AD1DD6E00BCD70D /* ReadMoreTextViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReadMoreTextViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		094F38711AD1DD6E00BCD70D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		094F38721AD1DD6E00BCD70D /* ReadMoreTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMoreTextViewTests.swift; sourceTree = "<group>"; };
-		143BEFF04737AA196688B784 /* Pods-ReadMoreTextView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadMoreTextView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReadMoreTextView/Pods-ReadMoreTextView.debug.xcconfig"; sourceTree = "<group>"; };
-		8D505CE2AB5839925F5E2903 /* Pods_ReadMoreTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadMoreTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E37E8AAC77A0E1A9023EA366 /* Pods-ReadMoreTextView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadMoreTextView.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReadMoreTextView/Pods-ReadMoreTextView.release.xcconfig"; sourceTree = "<group>"; };
+		481361E09D26A602BE5C1B45 /* Pods_ReadMoreTextViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReadMoreTextViewExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C937E2F4988BFA784F501EA /* Pods-ReadMoreTextViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadMoreTextViewExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReadMoreTextViewExample/Pods-ReadMoreTextViewExample.debug.xcconfig"; sourceTree = "<group>"; };
+		A015F18144C48980B24F9D27 /* Pods-ReadMoreTextViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadMoreTextViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReadMoreTextViewExample/Pods-ReadMoreTextViewExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AC9E0D135C48BA140B63A1B /* Pods_ReadMoreTextView.framework in Frameworks */,
+				4BA60EAA9E49C9F33187FAA4 /* Pods_ReadMoreTextViewExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,8 +67,8 @@
 				094F38591AD1DD6E00BCD70D /* ReadMoreTextView */,
 				094F386F1AD1DD6E00BCD70D /* ReadMoreTextViewTests */,
 				094F38581AD1DD6E00BCD70D /* Products */,
-				6C23DA08F9FB47E617EDCC3D /* Pods */,
-				4241CCED9453EC9C0EF6ECE0 /* Frameworks */,
+				E72E4B2B844AC1C39FF268E0 /* Pods */,
+				7342E6F06149117E2842EF5C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,19 +119,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4241CCED9453EC9C0EF6ECE0 /* Frameworks */ = {
+		7342E6F06149117E2842EF5C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8D505CE2AB5839925F5E2903 /* Pods_ReadMoreTextView.framework */,
+				481361E09D26A602BE5C1B45 /* Pods_ReadMoreTextViewExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6C23DA08F9FB47E617EDCC3D /* Pods */ = {
+		E72E4B2B844AC1C39FF268E0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				143BEFF04737AA196688B784 /* Pods-ReadMoreTextView.debug.xcconfig */,
-				E37E8AAC77A0E1A9023EA366 /* Pods-ReadMoreTextView.release.xcconfig */,
+				7C937E2F4988BFA784F501EA /* Pods-ReadMoreTextViewExample.debug.xcconfig */,
+				A015F18144C48980B24F9D27 /* Pods-ReadMoreTextViewExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -143,12 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 094F38761AD1DD6E00BCD70D /* Build configuration list for PBXNativeTarget "ReadMoreTextViewExample" */;
 			buildPhases = (
-				B2114F6EBC3A115BB9255922 /* [CP] Check Pods Manifest.lock */,
+				E6B3640D3CB553546926593C /* [CP] Check Pods Manifest.lock */,
 				094F38531AD1DD6E00BCD70D /* Sources */,
 				094F38541AD1DD6E00BCD70D /* Frameworks */,
 				094F38551AD1DD6E00BCD70D /* Resources */,
-				D7B6A067C59F3B191A60E9E8 /* [CP] Embed Pods Frameworks */,
-				91E7C97BFFEA0D50592E763E /* [CP] Copy Pods Resources */,
+				54C285754EAE89184A0E360A /* [CP] Embed Pods Frameworks */,
+				1AF7CE2E6A3452679EA874E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -239,7 +239,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		91E7C97BFFEA0D50592E763E /* [CP] Copy Pods Resources */ = {
+		1AF7CE2E6A3452679EA874E3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -251,10 +251,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ReadMoreTextView/Pods-ReadMoreTextView-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ReadMoreTextViewExample/Pods-ReadMoreTextViewExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B2114F6EBC3A115BB9255922 /* [CP] Check Pods Manifest.lock */ = {
+		54C285754EAE89184A0E360A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ReadMoreTextViewExample/Pods-ReadMoreTextViewExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6B3640D3CB553546926593C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -267,21 +282,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		D7B6A067C59F3B191A60E9E8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ReadMoreTextView/Pods-ReadMoreTextView-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -421,7 +421,7 @@
 		};
 		094F38771AD1DD6E00BCD70D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 143BEFF04737AA196688B784 /* Pods-ReadMoreTextView.debug.xcconfig */;
+			baseConfigurationReference = 7C937E2F4988BFA784F501EA /* Pods-ReadMoreTextViewExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4LTD6LARKC;
@@ -435,7 +435,7 @@
 		};
 		094F38781AD1DD6E00BCD70D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E37E8AAC77A0E1A9023EA366 /* Pods-ReadMoreTextView.release.xcconfig */;
+			baseConfigurationReference = A015F18144C48980B24F9D27 /* Pods-ReadMoreTextViewExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4LTD6LARKC;

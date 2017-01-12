@@ -13,7 +13,7 @@ extension UITextView {
     /**
      Calls provided `test` block if point is in gliph range and there is no link detected at this point.
      Will pass in to `test` a character index that corresponds to `point`.
-     Return `self` in `test` if text view should intercept the touch event or nil otherwise.
+     Return `self` in `test` if text view should intercept the touch event or `nil` otherwise.
      */
     public func hitTest(pointInGliphRange aPoint: CGPoint, event: UIEvent?, test: (Int) -> UIView?) -> UIView? {
         guard let charIndex = charIndexForPointInGlyphRect(point: aPoint) else {

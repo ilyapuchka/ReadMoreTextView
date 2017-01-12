@@ -5,7 +5,7 @@
 
 # ReadMoreTextView
 
-UITextView subclass with "read more"/"read less" capabilities.
+UITextView subclass with "read more"/"read less" capabilities and UITextView extensions to handle touches in characters range.
 
 ![](screenshot.gif)
 
@@ -17,15 +17,59 @@ UITextView subclass with "read more"/"read less" capabilities.
 
 	textView.shouldTrim = true
 	textView.maximumNumberOfLines = 4
-	textView.readMoreText = "... Read more"
-	textView.readLessText = " Read less"
+	textView.attributedReadMoreText = NSAttributedString(string: "... Read more")
+	textView.attributedReadMoreText = NSAttributedString(string: " Read less")
+	
+##Custom touches handling.
+
+This project also includes few helper methods that will allow you to detect and handle touches in arbitrary text ranges. This way you can for exapmle implement custom links handling in your `UITextView` subclass. `ReadMoreTextView` uses these methods itself to detect touches in "read more"/"read less" action areas.
+
+```swift
+
+extension UITextView {
+
+	/**
+	 Calls provided `test` block if point is in gliph range and there is no link detected at this point.
+	 Will pass in to `test` a character index that corresponds to `point`.
+	 Return `self` in `test` if text view should intercept the touch event or `nil` otherwise.
+	 */
+	public func hitTest(pointInGliphRange:event:test:) -> UIView?
+	
+	/**
+	 Returns true if point is in text bounding rect adjusted with padding.
+	 Bounding rect will be enlarged with positive padding values and decreased with negative values.
+	 */
+	public func pointIsInTextRange(point:range:padding:) -> Bool
+	
+	/**
+	 Returns index of character for glyph at provided point. Returns `nil` if point is out of any glyph.
+	 */
+	public func charIndexForPointInGlyphRect(point:) -> Int?
+	
+}
+
+extension NSLayoutManager {
+
+    /**
+     Returns characters range that completely fits into container.
+     */
+    public func characterRangeThatFits(textContainer:) -> NSRange
+    
+    /**
+     Returns bounding rect in provided container for characters in provided range.
+     */
+    public func boundingRectForCharacterRange(range:inTextContainer:) -> CGRect
+
+}
+
+```
 
 
 ##Installation
 
 Available in [Cocoa Pods](https://github.com/CocoaPods/CocoaPods):
 
-	pod 'ReadMoreTextView'
+` pod 'ReadMoreTextView' `
 
 ##License
 

@@ -1,5 +1,10 @@
 #CHANGELOG
 
+##1.2.0
+
+- fixed loosing data detector info when updating text
+- moved helper methods to public UITextView extension to easily add custom handling for toucher in arbitrary text ranges
+
 ##1.1.0
 
 - added `setNeedsUpdateTrim` method to force update trimming

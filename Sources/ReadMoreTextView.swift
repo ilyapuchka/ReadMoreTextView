@@ -349,11 +349,11 @@ public class ReadMoreTextView: UITextView {
             layoutManager.invalidateLayoutForCharacterRange(layoutManager.characterRangeThatFits(textContainer: textContainer), actualCharacterRange: nil)
             textContainer.size = CGSize(width: bounds.size.width, height: CGFloat.max)
         #endif
-        
-        let range = rangeToReplaceWithReadMoreText()
-        guard range.location != NSNotFound else { return }
-        
+
         if let text = attributedReadMoreText {
+            let range = rangeToReplaceWithReadMoreText()
+            guard range.location != NSNotFound else { return }
+
             #if swift(>=3.0)
                 textStorage.replaceCharacters(in: range, with: text)
             #else
@@ -379,10 +379,10 @@ public class ReadMoreTextView: UITextView {
 
         shouldTrim = false
         textContainer.maximumNumberOfLines = 0
-        
-        let range = NSRange(location: 0, length: text.length)
-        
+
         if let originalAttributedText = _originalAttributedText?.mutableCopy() as? NSMutableAttributedString {
+            attributedText = _originalAttributedText
+            let range = NSRange(location: 0, length: text.length)
             #if swift(>=3.0)
                 if let attributedReadLessText = attributedReadLessText {
                     originalAttributedText.append(attributedReadLessText)

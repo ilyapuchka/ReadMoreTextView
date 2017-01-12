@@ -253,44 +253,32 @@ public class ReadMoreTextView: UITextView {
     #if swift(>=3.0)
     
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let charIndex = hitTestPointIsInGliphRectAtCharIndex(point: point) else {
-            return super.hitTest(point, with: event)
-        }
-
-        if textStorage.attribute(NSLinkAttributeName, at: charIndex, effectiveRange: nil) != nil {
-            return super.hitTest(point, with: event)
-        } else if pointIsInReadMoreOrReadLessTextRange(point: point) != nil {
+        return hitTest(pointInGliphRange: point, event: event) { _ in
+            guard pointIsInReadMoreOrReadLessTextRange(point: point) != nil else { return nil }
             return self
-        } else {
-            return nil
         }
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer { super.touchesEnded(touches, with: event) }
-        guard let point = touches.first?.location(in: self) else { return }
-        shouldTrim = pointIsInReadMoreOrReadLessTextRange(point: point) ?? shouldTrim
+        if let point = touches.first?.location(in: self) {
+            shouldTrim = pointIsInReadMoreOrReadLessTextRange(point: point) ?? shouldTrim
+        }
+        super.touchesEnded(touches, with: event)
     }
     #else
     
     public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        guard let charIndex = hitTestPointIsInGliphRectAtCharIndex(point: point) else {
-            return super.hitTest(point, withEvent: event)
-        }
-    
-        if textStorage.attribute(NSLinkAttributeName, atIndex: charIndex, effectiveRange: nil) != nil {
-            return super.hitTest(point, withEvent: event)
-        } else if pointIsInReadMoreOrReadLessTextRange(point: point) != nil {
+        return hitTest(pointInGliphRange: point, event: event) { _ in
+            guard pointIsInReadMoreOrReadLessTextRange(point: point) != nil else { return nil }
             return self
-        } else {
-            return nil
         }
     }
 
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        defer { super.touchesEnded(touches, withEvent: event) }
-        guard let point = touches.first?.locationInView(self) else { return }
-        shouldTrim = pointIsInReadMoreOrReadLessTextRange(point: point) ?? shouldTrim
+        if let point = touches.first?.locationInView(self) {
+            shouldTrim = pointIsInReadMoreOrReadLessTextRange(point: point) ?? shouldTrim
+        }
+        super.touchesEnded(touches, withEvent: event)
     }
     
     #endif
@@ -463,65 +451,10 @@ public class ReadMoreTextView: UITextView {
         return nil
     }
 
-    private func pointIsInTextRange(point aPoint: CGPoint, range: NSRange, padding: UIEdgeInsets) -> Bool {
-        var boundingRect = layoutManager.boundingRectForCharacterRange(range: range, inTextContainer: textContainer)
-        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
-        boundingRect = boundingRect.insetBy(dx: -(padding.left + padding.right), dy: -(padding.top + padding.bottom))
-        return boundingRect.contains(aPoint)
-    }
-    
-    private func hitTestPointIsInGliphRectAtCharIndex(point aPoint: CGPoint) -> Int? {
-        let point = CGPoint(x: aPoint.x, y: aPoint.y - textContainerInset.top)
-        #if swift(>=3.0)
-            let glyphIndex = layoutManager.glyphIndex(for: point, in: textContainer)
-            let glyphRect = layoutManager.boundingRect(forGlyphRange: NSMakeRange(glyphIndex, 1), in: textContainer)
-            if glyphRect.contains(point) {
-                return layoutManager.characterIndexForGlyph(at: glyphIndex)
-            } else {
-                return nil
-            }
-        #else
-            let glyphIndex = layoutManager.glyphIndexForPoint(point, inTextContainer: textContainer)
-            let glyphRect = layoutManager.boundingRectForGlyphRange(NSMakeRange(glyphIndex, 1), inTextContainer: textContainer)
-            if CGRectContainsPoint(glyphRect, point) {
-                return layoutManager.characterIndexForGlyphAtIndex(glyphIndex)
-            }
-            else {
-                return nil
-            }
-        #endif
-    }
-    
 }
 
 extension String {
     var length: Int {
         return characters.count
     }
-}
-
-extension NSLayoutManager {
-    
-    func characterRangeThatFits(textContainer container: NSTextContainer) -> NSRange {
-        #if swift(>=3.0)
-            var rangeThatFits = self.glyphRange(for: container)
-            rangeThatFits = self.characterRange(forGlyphRange: rangeThatFits, actualGlyphRange: nil)
-        #else
-            var rangeThatFits = self.glyphRangeForTextContainer(container)
-            rangeThatFits = self.characterRangeForGlyphRange(rangeThatFits, actualGlyphRange: nil)
-        #endif
-        return rangeThatFits
-    }
-    
-    func boundingRectForCharacterRange(range aRange: NSRange, inTextContainer container: NSTextContainer) -> CGRect {
-        #if swift(>=3.0)
-            let glyphRange = self.glyphRange(forCharacterRange: aRange, actualCharacterRange: nil)
-            let boundingRect = self.boundingRect(forGlyphRange: glyphRange, in: container)
-        #else
-            let glyphRange = self.glyphRangeForCharacterRange(aRange, actualCharacterRange: nil)
-            let boundingRect = self.boundingRectForGlyphRange(glyphRange, inTextContainer: container)
-        #endif
-        return boundingRect
-    }
-    
 }

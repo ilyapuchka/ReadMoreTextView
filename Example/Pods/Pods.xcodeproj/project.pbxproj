@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D54E75E5683453F8710F2F79D1E5CD4 /* ReadMoreTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEB05108226F9144841322C256FA95C /* ReadMoreTextView.swift */; };
 		3597379FC64DCDE942F8E95F45B193E9 /* Pods-ReadMoreTextViewExample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8E5C911BA6C82BB46A58A9DAE6DAFF /* Pods-ReadMoreTextViewExample-dummy.m */; };
+		441810EAE3F3920D5348210E5AACF64F /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C04F3E0018ED544E4A66514840D90 /* UITextView+Extensions.swift */; };
 		5BDAD7A35C58867223BDFB0199256FDD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		6607EFA7CC6A2940E1C9C7B440D8B985 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
-		CC8A6281EF7BAB4EA92415A00C225856 /* ReadMoreTextView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B62238C22C03F5DF69C0D45FBD83EAE9 /* ReadMoreTextView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA071EB6DBAC03FB66A243AE51D6F9E1 /* ReadMoreTextView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 60EC81998176DDDE3F8CAAE997D03E08 /* ReadMoreTextView-dummy.m */; };
+		9DA62777FE564F447F62CC729272C11C /* ReadMoreTextView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3526E25B2CC58051C91993A8C358CC91 /* ReadMoreTextView-dummy.m */; };
+		CC8A6281EF7BAB4EA92415A00C225856 /* ReadMoreTextView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C27167D6C246375AD6F4FDCF9186B0C3 /* ReadMoreTextView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDD3C1ACBEA9F0BDBC7B3437133D1AA0 /* ReadMoreTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1609B3C4999713E2C4F0EB2808861DBD /* ReadMoreTextView.swift */; };
 		E67B6835FB2E53C4B862925A4539AD24 /* Pods-ReadMoreTextViewExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D82AAAD19A18B94EDAC41E9F506038 /* Pods-ReadMoreTextViewExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -27,26 +28,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15FBCC2E5E4196D7B251B9FD94432897 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1609B3C4999713E2C4F0EB2808861DBD /* ReadMoreTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadMoreTextView.swift; sourceTree = "<group>"; };
 		196DE5EDC2496F02C6B7E71A521B4274 /* Pods-ReadMoreTextViewExample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ReadMoreTextViewExample-acknowledgements.plist"; sourceTree = "<group>"; };
 		19BDF3558CAA5431362CCD557177E3A0 /* Pods-ReadMoreTextViewExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ReadMoreTextViewExample-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1FEB05108226F9144841322C256FA95C /* ReadMoreTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadMoreTextView.swift; sourceTree = "<group>"; };
 		2A9384A0F0089F5094E5C89C13713E01 /* ReadMoreTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ReadMoreTextView.framework; path = ReadMoreTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B8E5C911BA6C82BB46A58A9DAE6DAFF /* Pods-ReadMoreTextViewExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ReadMoreTextViewExample-dummy.m"; sourceTree = "<group>"; };
 		31C2C5582F899E9E529AE415EC62D533 /* Pods-ReadMoreTextViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ReadMoreTextViewExample.debug.xcconfig"; sourceTree = "<group>"; };
-		40C8C5A52BFE326A6D2E551CBB97390A /* ReadMoreTextView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReadMoreTextView-prefix.pch"; sourceTree = "<group>"; };
+		3526E25B2CC58051C91993A8C358CC91 /* ReadMoreTextView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReadMoreTextView-dummy.m"; sourceTree = "<group>"; };
 		4219EEDC3BE989ADCFBCF2A711865152 /* Pods_ReadMoreTextViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ReadMoreTextViewExample.framework; path = "Pods-ReadMoreTextViewExample.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4686C661354B6F81835B5D3B7AEB075C /* Pods-ReadMoreTextViewExample-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ReadMoreTextViewExample-resources.sh"; sourceTree = "<group>"; };
 		5ABA830DBB4F3F2C1B74C9F462093D49 /* Pods-ReadMoreTextViewExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ReadMoreTextViewExample.modulemap"; sourceTree = "<group>"; };
-		60EC81998176DDDE3F8CAAE997D03E08 /* ReadMoreTextView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReadMoreTextView-dummy.m"; sourceTree = "<group>"; };
-		6C2681B8AC509688CD17BA8F3E650A22 /* ReadMoreTextView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = ReadMoreTextView.modulemap; sourceTree = "<group>"; };
+		5F5C04F3E0018ED544E4A66514840D90 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
+		689AC87BE06C7E360AAEEAC1ECADAFD9 /* ReadMoreTextView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReadMoreTextView-prefix.pch"; sourceTree = "<group>"; };
 		799C9CB346F2178E8EB1A1C71405BF04 /* Pods-ReadMoreTextViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ReadMoreTextViewExample.release.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		B62238C22C03F5DF69C0D45FBD83EAE9 /* ReadMoreTextView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReadMoreTextView-umbrella.h"; sourceTree = "<group>"; };
 		B7D82AAAD19A18B94EDAC41E9F506038 /* Pods-ReadMoreTextViewExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ReadMoreTextViewExample-umbrella.h"; sourceTree = "<group>"; };
 		C027649DC0037F206E0684986D9D7CF2 /* Pods-ReadMoreTextViewExample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ReadMoreTextViewExample-frameworks.sh"; sourceTree = "<group>"; };
+		C27167D6C246375AD6F4FDCF9186B0C3 /* ReadMoreTextView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReadMoreTextView-umbrella.h"; sourceTree = "<group>"; };
+		C7B889C0CC27D4ED27ACEB5BF1807D46 /* ReadMoreTextView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = ReadMoreTextView.modulemap; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D46C2CB9F83362897C29FD75CD09FA0A /* ReadMoreTextView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReadMoreTextView.xcconfig; sourceTree = "<group>"; };
-		DFB1DCB4E819EEEDA0992B3D2F7B6759 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB417DECB634E49A92B283D3E65A170A /* ReadMoreTextView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReadMoreTextView.xcconfig; sourceTree = "<group>"; };
 		FBFA14730588EA147201B871A9C9800B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,16 +72,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0139DBE238703D6E8F9AE7C1931611B0 /* ReadMoreTextView */ = {
-			isa = PBXGroup;
-			children = (
-				2737F58909D32D20B784DA79F03C3553 /* Sources */,
-				EA50F1FC9F38D0A269D42323AE65A1F0 /* Support Files */,
-			);
-			name = ReadMoreTextView;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		09F2513A67F15497EB6AA766C99B653A /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,13 +80,14 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		2737F58909D32D20B784DA79F03C3553 /* Sources */ = {
+		0E397243B5B850B567026C8E73A7D3FF /* ReadMoreTextView */ = {
 			isa = PBXGroup;
 			children = (
-				1FEB05108226F9144841322C256FA95C /* ReadMoreTextView.swift */,
+				951855D157E243094C230683202DC646 /* Sources */,
+				3B71841FF53DF0378694021D594BCD6C /* Support Files */,
 			);
-			name = Sources;
-			path = Sources;
+			name = ReadMoreTextView;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		28D4AC494D794C24B887CB3B089A97CD /* Pods-ReadMoreTextViewExample */ = {
@@ -124,10 +117,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3B71841FF53DF0378694021D594BCD6C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				15FBCC2E5E4196D7B251B9FD94432897 /* Info.plist */,
+				C7B889C0CC27D4ED27ACEB5BF1807D46 /* ReadMoreTextView.modulemap */,
+				DB417DECB634E49A92B283D3E65A170A /* ReadMoreTextView.xcconfig */,
+				3526E25B2CC58051C91993A8C358CC91 /* ReadMoreTextView-dummy.m */,
+				689AC87BE06C7E360AAEEAC1ECADAFD9 /* ReadMoreTextView-prefix.pch */,
+				C27167D6C246375AD6F4FDCF9186B0C3 /* ReadMoreTextView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/ReadMoreTextView";
+			sourceTree = "<group>";
+		};
 		4C1CFEDC476ED9B4534BA4721C98A4E2 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0139DBE238703D6E8F9AE7C1931611B0 /* ReadMoreTextView */,
+				0E397243B5B850B567026C8E73A7D3FF /* ReadMoreTextView */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -151,26 +158,22 @@
 			);
 			sourceTree = "<group>";
 		};
+		951855D157E243094C230683202DC646 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1609B3C4999713E2C4F0EB2808861DBD /* ReadMoreTextView.swift */,
+				5F5C04F3E0018ED544E4A66514840D90 /* UITextView+Extensions.swift */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EA50F1FC9F38D0A269D42323AE65A1F0 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				DFB1DCB4E819EEEDA0992B3D2F7B6759 /* Info.plist */,
-				6C2681B8AC509688CD17BA8F3E650A22 /* ReadMoreTextView.modulemap */,
-				D46C2CB9F83362897C29FD75CD09FA0A /* ReadMoreTextView.xcconfig */,
-				60EC81998176DDDE3F8CAAE997D03E08 /* ReadMoreTextView-dummy.m */,
-				40C8C5A52BFE326A6D2E551CBB97390A /* ReadMoreTextView-prefix.pch */,
-				B62238C22C03F5DF69C0D45FBD83EAE9 /* ReadMoreTextView-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/ReadMoreTextView";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,7 +202,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6B436AE262C1BD38DC1FF6ED5A71B638 /* Build configuration list for PBXNativeTarget "ReadMoreTextView" */;
 			buildPhases = (
-				1FEE50214138FC4868D9A8B6BBB6675E /* Sources */,
+				699261A580E2FC3706BCB102A6AA10B5 /* Sources */,
 				F8B0B28A27EE2FE981FA074DF02CF642 /* Frameworks */,
 				1ED0C0170EDB721EF60EBFE2ADC162D0 /* Headers */,
 			);
@@ -258,12 +261,13 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1FEE50214138FC4868D9A8B6BBB6675E /* Sources */ = {
+		699261A580E2FC3706BCB102A6AA10B5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA071EB6DBAC03FB66A243AE51D6F9E1 /* ReadMoreTextView-dummy.m in Sources */,
-				0D54E75E5683453F8710F2F79D1E5CD4 /* ReadMoreTextView.swift in Sources */,
+				9DA62777FE564F447F62CC729272C11C /* ReadMoreTextView-dummy.m in Sources */,
+				DDD3C1ACBEA9F0BDBC7B3437133D1AA0 /* ReadMoreTextView.swift in Sources */,
+				441810EAE3F3920D5348210E5AACF64F /* UITextView+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +369,7 @@
 		};
 		4A1DEA6984906477DF79EF0B48C6C290 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D46C2CB9F83362897C29FD75CD09FA0A /* ReadMoreTextView.xcconfig */;
+			baseConfigurationReference = DB417DECB634E49A92B283D3E65A170A /* ReadMoreTextView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -442,7 +446,7 @@
 		};
 		A0CA2F9FB0B42835FC8BAA041732768D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D46C2CB9F83362897C29FD75CD09FA0A /* ReadMoreTextView.xcconfig */;
+			baseConfigurationReference = DB417DECB634E49A92B283D3E65A170A /* ReadMoreTextView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

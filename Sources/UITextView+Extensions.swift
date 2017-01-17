@@ -10,6 +10,8 @@ import UIKit
 
 extension UITextView {
     
+    #if swift(>=3.0)
+
     /**
      Calls provided `test` block if point is in gliph range and there is no link detected at this point.
      Will pass in to `test` a character index that corresponds to `point`.
@@ -17,23 +19,30 @@ extension UITextView {
      */
     public func hitTest(pointInGliphRange aPoint: CGPoint, event: UIEvent?, test: (Int) -> UIView?) -> UIView? {
         guard let charIndex = charIndexForPointInGlyphRect(point: aPoint) else {
-            #if swift(>=3.0)
                 return super.hitTest(aPoint, with: event)
-            #else
-                return super.hitTest(aPoint, withEvent: event)
-            #endif
         }
-        #if swift(>=3.0)
-            guard textStorage.attribute(NSLinkAttributeName, at: charIndex, effectiveRange: nil) == nil else {
-                return super.hitTest(aPoint, with: event)
-            }
-        #else
-            guard textStorage.attribute(NSLinkAttributeName, atIndex: charIndex, effectiveRange: nil) == nil else {
-                return super.hitTest(aPoint, withEvent: event)
-            }
-        #endif
+        guard textStorage.attribute(NSLinkAttributeName, at: charIndex, effectiveRange: nil) == nil else {
+            return super.hitTest(aPoint, with: event)
+        }
         return test(charIndex)
     }
+    #else
+
+    /**
+     Calls provided `test` block if point is in gliph range and there is no link detected at this point.
+     Will pass in to `test` a character index that corresponds to `point`.
+     Return `self` in `test` if text view should intercept the touch event or `nil` otherwise.
+     */
+    public func hitTest(pointInGliphRange aPoint: CGPoint, event: UIEvent?, @noescape test: (Int) -> UIView?) -> UIView? {
+        guard let charIndex = charIndexForPointInGlyphRect(point: aPoint) else {
+            return super.hitTest(aPoint, withEvent: event)
+        }
+        guard textStorage.attribute(NSLinkAttributeName, atIndex: charIndex, effectiveRange: nil) == nil else {
+            return super.hitTest(aPoint, withEvent: event)
+        }
+        return test(charIndex)
+    }
+    #endif
     
     /**
      Returns true if point is in text bounding rect adjusted with padding.

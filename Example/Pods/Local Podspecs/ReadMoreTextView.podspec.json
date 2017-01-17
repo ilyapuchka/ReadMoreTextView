@@ -1,8 +1,8 @@
 {
   "name": "ReadMoreTextView",
-  "version": "1.1.0",
-  "summary": "UITextView subclass with \"read more\"/\"read less\" capabilities.",
-  "description": "UITextView subclass with \"Read more\" behavior.\n\n* Set \"read more\"/\"read less\" text as a String or NSAttributedString\n* Set maximum number of lines to display\n* Turn trim on/off\n* Live updates and setup in Interface Builder",
+  "version": "1.2.0",
+  "summary": "UITextView subclass with \"read more\"/\"read less\" capabilities and UITextView extensions to handle touches in characters range.",
+  "description": "UITextView subclass with \"Read more\" behavior.\nUITextView extensions to handle touches in characters range. \n\n* Set \"read more\"/\"read less\" text as a String or NSAttributedString\n* Set maximum number of lines to display\n* Turn trim on/off\n* Live updates and setup in Interface Builder\n* Use UITextView extension methods to detect touches in arbitrary text ranges.",
   "homepage": "http://ilya.puchka.me/custom-uitextview-in-swift/",
   "license": {
     "type": "MIT",
@@ -17,7 +17,7 @@
   },
   "source": {
     "git": "https://github.com/ilyapuchka/ReadMoreTextView.git",
-    "tag": "1.1.0"
+    "tag": "1.2.0"
   },
   "source_files": "Sources/*.swift"
 }

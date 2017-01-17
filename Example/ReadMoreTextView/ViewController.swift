@@ -53,24 +53,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
 
+    var expandedCells = Set<Int>()
+
     #if swift(>=3.0)
     @IBAction func toggleTrim(_ sender: UIButton) {
         readMoreTextView.shouldTrim = !readMoreTextView.shouldTrim
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReadMoreCell", for: indexPath)
         let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
-        readMoreTextView.onSizeChange = { [unowned tableView] _ in
-            tableView.reloadData()
-        }
+        readMoreTextView.shouldTrim = !expandedCells.contains(indexPath.row)
         readMoreTextView.setNeedsUpdateTrim()
         readMoreTextView.layoutIfNeeded()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
+        readMoreTextView.onSizeChange = { [unowned tableView, unowned self] r in
+            let point = tableView.convert(r.bounds.origin, from: r)
+            guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+            if r.shouldTrim {
+                self.expandedCells.remove(indexPath.row)
+            } else {
+                self.expandedCells.insert(indexPath.row)
+            }
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -92,18 +106,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 50
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ReadMoreCell", forIndexPath: indexPath)
         let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
-        readMoreTextView.onSizeChange = { [unowned tableView] _ in
-            tableView.reloadData()
-        }
+        readMoreTextView.shouldTrim = !expandedCells.contains(indexPath.row)
         readMoreTextView.setNeedsUpdateTrim()
         readMoreTextView.layoutIfNeeded()
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let readMoreTextView = cell.contentView.viewWithTag(1) as! ReadMoreTextView
+        readMoreTextView.onSizeChange = { [unowned tableView, unowned self] r in
+            let point = tableView.convertPoint(r.bounds.origin, fromView: r)
+            guard let indexPath = tableView.indexPathForRowAtPoint(point) else { return }
+            if r.shouldTrim {
+                self.expandedCells.remove(indexPath.row)
+            } else {
+                self.expandedCells.insert(indexPath.row)
+            }
+            tableView.reloadData()
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -123,3 +149,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+class ReadMoreCell : UITableViewCell {
+    
+    @IBOutlet weak var readMoreTextView: ReadMoreTextView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        readMoreTextView.onSizeChange = { _ in }
+        readMoreTextView.shouldTrim = true
+    }
+    
+}

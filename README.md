@@ -18,7 +18,7 @@ UITextView subclass with "read more"/"read less" capabilities and UITextView ext
 	textView.shouldTrim = true
 	textView.maximumNumberOfLines = 4
 	textView.attributedReadMoreText = NSAttributedString(string: "... Read more")
-	textView.attributedReadMoreText = NSAttributedString(string: " Read less")
+	textView.attributedReadLessText = NSAttributedString(string: " Read less")
 	
 ##Custom touches handling.
 

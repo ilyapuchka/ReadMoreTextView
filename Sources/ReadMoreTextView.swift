@@ -207,7 +207,6 @@ public class ReadMoreTextView: UITextView {
         }
         didSet {
             _originalAttributedText = attributedText
-            setNeedsLayout()
         }
     }
     

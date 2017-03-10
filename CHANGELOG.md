@@ -1,5 +1,9 @@
 #CHANGELOG
 
+##1.2.1
+
+- fixed regression causing infinite layout loop
+
 ##1.2.0
 
 - fixed loosing data detector info when updating text

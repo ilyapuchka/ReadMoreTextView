@@ -10,8 +10,6 @@ import UIKit
 
 extension UITextView {
     
-    #if swift(>=3.0)
-
     /**
      Calls provided `test` block if point is in gliph range and there is no link detected at this point.
      Will pass in to `test` a character index that corresponds to `point`.
@@ -26,23 +24,6 @@ extension UITextView {
         }
         return test(charIndex)
     }
-    #else
-
-    /**
-     Calls provided `test` block if point is in gliph range and there is no link detected at this point.
-     Will pass in to `test` a character index that corresponds to `point`.
-     Return `self` in `test` if text view should intercept the touch event or `nil` otherwise.
-     */
-    public func hitTest(pointInGliphRange aPoint: CGPoint, event: UIEvent?, @noescape test: (Int) -> UIView?) -> UIView? {
-        guard let charIndex = charIndexForPointInGlyphRect(point: aPoint) else {
-            return super.hitTest(aPoint, withEvent: event)
-        }
-        guard textStorage.attribute(NSLinkAttributeName, atIndex: charIndex, effectiveRange: nil) == nil else {
-            return super.hitTest(aPoint, withEvent: event)
-        }
-        return test(charIndex)
-    }
-    #endif
     
     /**
      Returns true if point is in text bounding rect adjusted with padding.
@@ -60,24 +41,13 @@ extension UITextView {
      */
     public func charIndexForPointInGlyphRect(point aPoint: CGPoint) -> Int? {
         let point = CGPoint(x: aPoint.x, y: aPoint.y - textContainerInset.top)
-        #if swift(>=3.0)
-            let glyphIndex = layoutManager.glyphIndex(for: point, in: textContainer)
-            let glyphRect = layoutManager.boundingRect(forGlyphRange: NSMakeRange(glyphIndex, 1), in: textContainer)
-            if glyphRect.contains(point) {
-                return layoutManager.characterIndexForGlyph(at: glyphIndex)
-            } else {
-                return nil
-            }
-        #else
-            let glyphIndex = layoutManager.glyphIndexForPoint(point, inTextContainer: textContainer)
-            let glyphRect = layoutManager.boundingRectForGlyphRange(NSMakeRange(glyphIndex, 1), inTextContainer: textContainer)
-            if CGRectContainsPoint(glyphRect, point) {
-                return layoutManager.characterIndexForGlyphAtIndex(glyphIndex)
-            }
-            else {
-                return nil
-            }
-        #endif
+        let glyphIndex = layoutManager.glyphIndex(for: point, in: textContainer)
+        let glyphRect = layoutManager.boundingRect(forGlyphRange: NSMakeRange(glyphIndex, 1), in: textContainer)
+        if glyphRect.contains(point) {
+            return layoutManager.characterIndexForGlyph(at: glyphIndex)
+        } else {
+            return nil
+        }
     }
     
 }
@@ -88,13 +58,8 @@ extension NSLayoutManager {
      Returns characters range that completely fits into container.
      */
     public func characterRangeThatFits(textContainer container: NSTextContainer) -> NSRange {
-        #if swift(>=3.0)
-            var rangeThatFits = self.glyphRange(for: container)
-            rangeThatFits = self.characterRange(forGlyphRange: rangeThatFits, actualGlyphRange: nil)
-        #else
-            var rangeThatFits = self.glyphRangeForTextContainer(container)
-            rangeThatFits = self.characterRangeForGlyphRange(rangeThatFits, actualGlyphRange: nil)
-        #endif
+        var rangeThatFits = self.glyphRange(for: container)
+        rangeThatFits = self.characterRange(forGlyphRange: rangeThatFits, actualGlyphRange: nil)
         return rangeThatFits
     }
     
@@ -102,13 +67,8 @@ extension NSLayoutManager {
      Returns bounding rect in provided container for characters in provided range.
      */
     public func boundingRectForCharacterRange(range aRange: NSRange, inTextContainer container: NSTextContainer) -> CGRect {
-        #if swift(>=3.0)
-            let glyphRange = self.glyphRange(forCharacterRange: aRange, actualCharacterRange: nil)
-            let boundingRect = self.boundingRect(forGlyphRange: glyphRange, in: container)
-        #else
-            let glyphRange = self.glyphRangeForCharacterRange(aRange, actualCharacterRange: nil)
-            let boundingRect = self.boundingRectForGlyphRange(glyphRange, inTextContainer: container)
-        #endif
+        let glyphRange = self.glyphRange(forCharacterRange: aRange, actualCharacterRange: nil)
+        let boundingRect = self.boundingRect(forGlyphRange: glyphRange, in: container)
         return boundingRect
     }
     

@@ -9,7 +9,7 @@ UITextView subclass with "read more"/"read less" capabilities and UITextView ext
 
 ![](screenshot.gif)
 
-##Usage
+## Usage
 
 	let textView = ReadMoreTextView()
 
@@ -20,7 +20,7 @@ UITextView subclass with "read more"/"read less" capabilities and UITextView ext
 	textView.attributedReadMoreText = NSAttributedString(string: "... Read more")
 	textView.attributedReadLessText = NSAttributedString(string: " Read less")
 	
-##Custom touches handling.
+## Custom touches handling.
 
 This project also includes few helper methods that will allow you to detect and handle touches in arbitrary text ranges. This way you can for exapmle implement custom links handling in your `UITextView` subclass. `ReadMoreTextView` uses these methods itself to detect touches in "read more"/"read less" action areas.
 
@@ -65,12 +65,12 @@ extension NSLayoutManager {
 ```
 
 
-##Installation
+## Installation
 
 Available in [Cocoa Pods](https://github.com/CocoaPods/CocoaPods):
 
 ` pod 'ReadMoreTextView' `
 
-##License
+## License
 
 ReadMoreTextView is available under the [MIT license](http://www.opensource.org/licenses/mit-license.php).

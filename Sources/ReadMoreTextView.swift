@@ -133,6 +133,7 @@ public class ReadMoreTextView: UITextView {
                 maximumNumberOfLines = 0
                 _originalMaximumNumberOfLines = _maximumNumberOfLines
             }
+            cachedIntrinsicContentHeight = nil
             setNeedsLayout()
         }
     }
@@ -207,6 +208,8 @@ public class ReadMoreTextView: UITextView {
         return intrinsicContentSize.height
     }
     
+    private var cachedIntrinsicContentHeight: CGFloat?
+    
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         return hitTest(pointInGliphRange: point, event: event) { _ in
             guard pointIsInReadMoreOrReadLessTextRange(point: point) != nil else { return nil }
@@ -246,14 +249,6 @@ public class ReadMoreTextView: UITextView {
     private func showLessText() {
         if let readMoreText = readMoreText, text.hasSuffix(readMoreText) { return }
         
-        let oldHeight = intrinsicContentHeight
-        defer {
-            invalidateIntrinsicContentSize()
-            if intrinsicContentHeight != oldHeight {
-                onSizeChange(self)
-            }
-        }
-
         shouldTrim = true
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         
@@ -266,19 +261,14 @@ public class ReadMoreTextView: UITextView {
 
             textStorage.replaceCharacters(in: range, with: text)
         }
+        
+        invalidateIntrinsicContentSize()
+        invokeOnSizeChangeIfNeeded()
     }
     
     private func showMoreText() {
         if let readLessText = readLessText, text.hasSuffix(readLessText) { return }
-
-        let oldHeight = intrinsicContentHeight
-        defer {
-            invalidateIntrinsicContentSize()
-            if intrinsicContentHeight != oldHeight {
-                onSizeChange(self)
-            }
-        }
-
+        
         shouldTrim = false
         textContainer.maximumNumberOfLines = 0
 
@@ -289,6 +279,21 @@ public class ReadMoreTextView: UITextView {
                 originalAttributedText.append(attributedReadLessText)
             }
             textStorage.replaceCharacters(in: range, with: originalAttributedText)
+        }
+        
+        invalidateIntrinsicContentSize()
+        invokeOnSizeChangeIfNeeded()
+    }
+    
+    private func invokeOnSizeChangeIfNeeded() {
+        if let cachedIntrinsicContentHeight = cachedIntrinsicContentHeight {
+            if intrinsicContentHeight != cachedIntrinsicContentHeight {
+                self.cachedIntrinsicContentHeight = intrinsicContentHeight
+                onSizeChange(self)
+            }
+        } else {
+            self.cachedIntrinsicContentHeight = intrinsicContentHeight
+            onSizeChange(self)
         }
     }
     

@@ -1,5 +1,14 @@
 #CHANGELOG
 
+##3.0.0
+
+- Swift 4 support
+
+##2.0.0
+
+- dropped Swift 2.3 support
+- improved logic around size change callback
+
 ##1.2.1
 
 - fixed regression causing infinite layout loop

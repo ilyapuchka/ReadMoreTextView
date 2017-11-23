@@ -33,9 +33,6 @@ extension UITextView {
         var boundingRect = layoutManager.boundingRectForCharacterRange(range: range, inTextContainer: textContainer)
         let offset = CGFloat(range.length)
         boundingRect = boundingRect.insetBy(dx: -(offset * 2), dy: 0)
-
-//        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
-//        boundingRect = boundingRect.insetBy(dx: -(padding.left + padding.right), dy: -(padding.top + padding.bottom))
         return boundingRect.contains(aPoint)
     }
     

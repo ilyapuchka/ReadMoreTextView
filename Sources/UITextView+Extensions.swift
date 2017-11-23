@@ -31,8 +31,11 @@ extension UITextView {
      */
     public func pointIsInTextRange(point aPoint: CGPoint, range: NSRange, padding: UIEdgeInsets) -> Bool {
         var boundingRect = layoutManager.boundingRectForCharacterRange(range: range, inTextContainer: textContainer)
-        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
-        boundingRect = boundingRect.insetBy(dx: -(padding.left + padding.right), dy: -(padding.top + padding.bottom))
+        let offset = CGFloat(range.length)
+        boundingRect = boundingRect.insetBy(dx: -(offset * 2), dy: 0)
+
+//        boundingRect = boundingRect.offsetBy(dx: textContainerInset.left, dy: textContainerInset.top)
+//        boundingRect = boundingRect.insetBy(dx: -(padding.left + padding.right), dy: -(padding.top + padding.bottom))
         return boundingRect.contains(aPoint)
     }
     

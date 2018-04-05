@@ -1,3 +1,4 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 [![Version](https://img.shields.io/cocoapods/v/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)
 [![License](https://img.shields.io/cocoapods/l/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)
 [![Platform](https://img.shields.io/cocoapods/p/ReadMoreTextView.svg?style=flat)](http://cocoapods.org/pods/ReadMoreTextView)

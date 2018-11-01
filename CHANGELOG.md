@@ -1,5 +1,10 @@
 #CHANGELOG
 
+##3.0.1
+
+- Swift 4.2 support
+- use `utf16` symbols count to place more & less buttons correctly in the HTML page.
+
 ##3.0.0
 
 - Swift 4 support

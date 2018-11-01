@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ReadMoreTextView"
-  s.version      = "3.0.0"
+  s.version      = "3.0.1"
   s.summary      = 'UITextView subclass with "read more"/"read less" capabilities and UITextView extensions to handle touches in characters range.'
 
   s.description  = <<-DESC

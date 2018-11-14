@@ -274,7 +274,7 @@ public class ReadMoreTextView: UITextView {
 
         if let originalAttributedText = _originalAttributedText?.mutableCopy() as? NSMutableAttributedString {
             attributedText = _originalAttributedText
-            let range = NSRange(location: 0, length: text.length)
+            let range = NSRange(location: 0, length: text.unicodeScalars.count)
             if let attributedReadLessText = attributedReadLessText {
                 originalAttributedText.append(attributedReadLessText)
             }

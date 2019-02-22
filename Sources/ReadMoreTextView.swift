@@ -279,6 +279,7 @@ public class ReadMoreTextView: UITextView {
             }
             textStorage.replaceCharacters(in: range, with: originalAttributedText)
         }
+        
         attributedText = _originalAttributedText
         invalidateIntrinsicContentSize()
         invokeOnSizeChangeIfNeeded()

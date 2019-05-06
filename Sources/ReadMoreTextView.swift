@@ -198,7 +198,7 @@ public class ReadMoreTextView: UITextView {
     public override var intrinsicContentSize : CGSize {
         textContainer.size = CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude)
         var intrinsicContentSize = layoutManager.boundingRect(forGlyphRange: layoutManager.glyphRange(for: textContainer), in: textContainer).size
-        intrinsicContentSize.width = UIView.noIntrinsicMetric
+        intrinsicContentSize.width = UIViewNoIntrinsicMetric
         intrinsicContentSize.height += (textContainerInset.top + textContainerInset.bottom)
         intrinsicContentSize.height = ceil(intrinsicContentSize.height)
         return intrinsicContentSize

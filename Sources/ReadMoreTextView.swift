@@ -231,7 +231,7 @@ public class ReadMoreTextView: UITextView {
     private var _originalAttributedText: NSAttributedString!
     private var _originalTextLength: Int {
         get {
-            return _originalAttributedText?.length ?? 0
+            return _originalAttributedText?.string.length ?? 0
         }
     }
     
@@ -274,7 +274,7 @@ public class ReadMoreTextView: UITextView {
 
         if let originalAttributedText = _originalAttributedText?.mutableCopy() as? NSMutableAttributedString {
             attributedText = _originalAttributedText
-            let range = NSRange(location: 0, length: text.unicodeScalars.count)
+            let range = NSRange(location: 0, length: text.length)
             if let attributedReadLessText = attributedReadLessText {
                 originalAttributedText.append(attributedReadLessText)
             }
@@ -305,7 +305,7 @@ public class ReadMoreTextView: UITextView {
         else {
             let lastCharacterIndex = characterIndexBeforeTrim(range: rangeThatFitsContainer)
             if lastCharacterIndex > 0 {
-                return NSMakeRange(lastCharacterIndex, textStorage.length - lastCharacterIndex)
+                return NSMakeRange(lastCharacterIndex, textStorage.string.length - lastCharacterIndex)
             }
             else {
                 return NSMakeRange(NSNotFound, 0)
